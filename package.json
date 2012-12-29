@@ -1,0 +1,14 @@
+{
+  "name": "npm-delegate",
+  "version": "0.1.0",
+  "description": "a hierarchical npm-registry proxy",
+  "main": "npm-delegate.js",
+  "repository": "",
+  "author": "jden <jason@denizac.org>",
+  "license": "MIT",
+  "dependencies": {
+    "optimist": "~0.3.5",
+    "fallback": "~1.0.0",
+    "url2": "0.0.0"
+  }
+}
