@@ -15,6 +15,7 @@ say you want to set up a local, private npm registry for certain modules, but yo
     |            |            |x |  ------> | private    |
     |            |            |y | <------  | registry   |
     |            |            |  |    404   +------------+
+    |            |            |  |
     |            |            |  |          'foo'?     +---------------+
     |            |            |  |  -----------------> |               |
     |            |            |  | <-----------------  |  public       |
@@ -38,7 +39,7 @@ setup your npm client:
 
 List as many registries as you want in fall-back order as command line arguments when startingnpm-registry.
 
-## note: proxy is read-onlys
+## note: proxy is read-only
 
 Only GET requests are allowed. Strange things happens when you send state-changing requests around willy-nilly, and that's probably not what you want. For example, to publish a module, you probably want to specify which registry you're publishing it to, eg
 
