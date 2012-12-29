@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "a hierarchical npm-registry proxy",
   "main": "npm-delegate.js",
-  "repository": "",
+  "repository": "git@github.com:jden/npm-delegate.git",
   "author": "jden <jason@denizac.org>",
   "license": "MIT",
   "dependencies": {
