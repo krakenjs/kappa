@@ -37,7 +37,7 @@ setup your npm client:
 
     npm do-some-stuff
 
-List as many registries as you want in fall-back order as command line arguments when starting npm-delegate.
+List as many registries as you want in fall-back order as command line arguments when starting `npm-delegate`.
 
 ## note: proxy is read-only
 
