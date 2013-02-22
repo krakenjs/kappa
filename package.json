@@ -1,20 +1,20 @@
 {
-  "name": "npm-delegate",
+  "name": "turnip",
   "version": "0.1.0",
-  "description": "a hierarchical npm-registry proxy to make private registries easier",
-  "main": "npm-delegate.js",
+  "description": "A hierarchical npm-registry proxy to make private registries easier.",
+  "main": "index.js",
   "keywords": [
     "npm",
     "registry",
     "private",
     "proxy"
   ],
-  "repository": "git@github.com:jden/npm-delegate.git",
-  "author": "jden <jason@denizac.org>",
+  "repository": "git@github.paypal.com:ertoth/turnip.git",
+  "author": "Erik Toth <ertoth@paypal.com>",
   "license": "MIT",
   "dependencies": {
-    "optimist": "~0.3.5",
-    "fallback": "~1.0.0",
-    "url2": "0.0.0"
+    "commander": "~1.1.1",
+    "request": "~2.14.0",
+    "hapi": "~0.14.1"
   }
 }
