@@ -1,7 +1,7 @@
 {
   "name": "turnip",
-  "version": "0.1.0",
-  "description": "A hierarchical npm-registry proxy to make private registries easier.",
+  "version": "0.10.0",
+  "description": "A hierarchical npm-registry proxy to make private registries easier. (Based on npm-delegate by @jden)",
   "main": "index.js",
   "keywords": [
     "npm",
@@ -13,8 +13,17 @@
   "author": "Erik Toth <ertoth@paypal.com>",
   "license": "MIT",
   "dependencies": {
-    "commander": "~1.1.1",
-    "request": "~2.14.0",
-    "hapi": "~0.14.1"
+    "request": "~2.14.0"
+  },
+  "peerDependencies": {
+    "hapi": "~0.14.x"
+  },
+  "devDependencies": {
+    "hapi": "~0.14.x",
+    "npm": "~1.2.12",
+    "mocha": "~1.8.1"
+  },
+  "publishConfig": {
+    "registry": "http://10.9.110.82:5984/registry/_design/app/_rewrite/"
   }
 }

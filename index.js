@@ -1,34 +1,37 @@
 'use strict';
 
-var Hapi = require('hapi');
+var delegate = require('./lib/delegate');
 
+exports.register = function (server, options, next) {
+    var paths = options.paths,
+        readDelegate = delegate.createHandler(paths),
+        writeDelegate = delegate.createHandler(paths.slice(0, 1));
 
-process.on('uncaughtException', function (err) {
-    Hapi.Log.event('error', err.message);
-    Hapi.Log.event('error', err.stack);
-    process.exit(1);
-});
+    // GETs always get proxy-ed
+    server.route({
+        method: 'GET',
+        path: '/{p*}',
+        handler: readDelegate
+    });
 
+    // POST and PUTs always go to first service only (writeDelegate)
+    server.route({
+        method: 'POST',
+        path: '/{p*}',
+        config: {
+            handler: writeDelegate,
+            payload: 'stream'
+        }
+    });
 
-var argv = require('commander')
-    .version('0.0.1')
-    .usage('[options] <registry ...>')
-    .option('-p, --port [port]', 'Port to listen on (default 8000)', parseInt, 8000)
-    .parse(process.argv);
+    server.route({
+        method: 'PUT',
+        path: '/{p*}',
+        config: {
+            handler: writeDelegate,
+            payload: 'stream'
+        }
+    });
 
-if (!argv.args || !argv.args.length) {
-    Hapi.Log.event('error', 'npm-delegate: Please specify the URL (including port) for at least one NPM registry.');
-    Hapi.Log.event('error', 'npm-delegate: try \'npm-delegate --help\' for more information');
-    process.exit(1);
-}
-
-
-var server = new Hapi.Server(argv.port);
-server.plugin().require('./lib/delegate', { paths: argv.args }, function () {
-    server.start();
-});
-
-
-
-
-
+    next();
+};
