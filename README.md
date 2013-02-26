@@ -12,11 +12,9 @@ Configure the plugin with a paths array of repositories to hit in order:
 }
 ```
 
-For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry,
-and if the requested module, continue to the next registry, and so on.
+For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry.
+If the requested module is not found it continues to the next registry, and so on.
 
-For write operations the proxy will only attempt to write to the FIRST registry.
-
-All auth occurs with the first registry as well.
+For write operations the proxy will only attempt to write to the FIRST registry. All auth occurs with the first registry as well.
 
 
