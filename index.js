@@ -7,10 +7,11 @@ exports.register = function (server, options, next) {
         readDelegate = delegate.createHandler(paths),
         writeDelegate = delegate.createHandler(paths.slice(0, 1));
 
-    // GETs always get proxy-ed
+    // GETs always get proxied
     server.route({
         method: 'GET',
         path: '/{p*}',
+        vhost: options.vhost,
         handler: readDelegate
     });
 
@@ -18,6 +19,7 @@ exports.register = function (server, options, next) {
     server.route({
         method: 'POST',
         path: '/{p*}',
+        vhost: options.vhost,
         config: {
             handler: writeDelegate,
             payload: 'stream'
@@ -27,6 +29,7 @@ exports.register = function (server, options, next) {
     server.route({
         method: 'PUT',
         path: '/{p*}',
+        vhost: options.vhost,
         config: {
             handler: writeDelegate,
             payload: 'stream'
