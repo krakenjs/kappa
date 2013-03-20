@@ -16,10 +16,10 @@
     "request": "~2.14.0"
   },
   "peerDependencies": {
-    "hapi": "~0.14.x"
+    "hapi": "~0.15.x"
   },
   "devDependencies": {
-    "hapi": "~0.14.x",
+    "hapi": "~0.15.x",
     "npm": "~1.2.12",
     "mocha": "~1.8.1"
   },
