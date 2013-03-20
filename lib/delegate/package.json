@@ -7,7 +7,7 @@
     "test": "make test"
   },
   "peerDependencies": {
-      "hapi": "~0.14.x"
+      "hapi": "~0.15.x"
   },
   "repository": "",
   "author": "Erik Toth <ertoth@paypal.com>",
