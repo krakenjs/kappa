@@ -15,8 +15,8 @@ describe('turnip', function () {
             paths: ['http://10.9.110.82:5984/registry/_design/app/_rewrite/', 'http://registry.npmjs.org/']
         };
 
-        server = new Hapi.Server('0.0.0.0', 1234);
-        server.plugin().require('../', config, function () {
+        server = new Hapi.Server(1234);
+        server.plugin.require('../', config, function () {
             server.start();
             next();
         });

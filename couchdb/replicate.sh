@@ -8,7 +8,7 @@ read -s password
 
 echo
 
-hostname=http://10.9.110.82:5984
+hostname=http://stage2p2407.qa.paypal.com:5984
 if [ "$1" != "" ]; then
     hostname=$1
 fi
