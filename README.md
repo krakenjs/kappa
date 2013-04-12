@@ -20,6 +20,8 @@ For write operations the proxy will only attempt to write to the FIRST registry.
 
 
 
-##### **¡NPM GOTCHA!**
-Be sure to comment out the block called `// legacy kludge` ... `// end kludge` in
+##### **¡NPM GOTCHAS!**
+- Be sure to comment out the block called `// legacy kludge` ... `// end kludge` in
 `registry > _design/app > shows` as it rewrites tarball paths **back** to internal registry paths. Yuck.
+
+- Unsafe rewrites need to be enabled. :/
