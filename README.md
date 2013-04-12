@@ -1,7 +1,5 @@
 turnip
 ======
-¡NPM GOTCHA! Be sure to comment out the block called `// legacy kludge` ... `// end kludge` in
-`registry > _design/app > shows` as it rewrites tarball paths **back** to internal registry paths. Yuck.
 
 ![turnip](https://github.paypal.com/ertoth/turnip/raw/master/img/tunip.png "turnip")
 
@@ -21,3 +19,5 @@ If the requested module is not found it continues to the next registry, and so o
 For write operations the proxy will only attempt to write to the FIRST registry. All auth occurs with the first registry as well.
 
 
+**¡NPM GOTCHA!** Be sure to comment out the block called `// legacy kludge` ... `// end kludge` in
+`registry > _design/app > shows` as it rewrites tarball paths **back** to internal registry paths. Yuck.
