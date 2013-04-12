@@ -1,5 +1,8 @@
 turnip
 ======
+¡NPM GOTCHA! Be sure to comment out the block called `// legacy kludge` ... `// end kludge` in
+`registry > _design/app > shows` as it rewrites tarball paths **back** to internal registry paths. Yuck.
+
 ![turnip](https://github.paypal.com/ertoth/turnip/raw/master/img/tunip.png "turnip")
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
