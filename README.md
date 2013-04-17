@@ -25,3 +25,5 @@ For write operations the proxy will only attempt to write to the FIRST registry.
 `registry > _design/app > shows` as it rewrites tarball paths **back** to internal registry paths. Yuck.
 
 - Unsafe rewrites need to be enabled. :/
+
+- Make sure registry table has a record with '_id' = 'error: forbidden' and 'forbidden' = 'must supply latest _rev to update existing package'
