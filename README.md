@@ -1,5 +1,6 @@
 turnip
 ======
+
 ![turnip](https://github.paypal.com/ertoth/turnip/raw/master/img/tunip.png "turnip")
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
@@ -18,3 +19,11 @@ If the requested module is not found it continues to the next registry, and so o
 For write operations the proxy will only attempt to write to the FIRST registry. All auth occurs with the first registry as well.
 
 
+
+##### **¡NPM GOTCHAS!**
+- Be sure to comment out the block called `// legacy kludge` ... `// end kludge` in
+`registry > _design/app > shows` as it rewrites tarball paths **back** to internal registry paths. Yuck.
+
+- Unsafe rewrites need to be enabled. :/
+
+- Make sure registry table has a record with '_id' = 'error: forbidden' and 'forbidden' = 'must supply latest _rev to update existing package'
