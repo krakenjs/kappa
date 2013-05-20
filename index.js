@@ -5,8 +5,9 @@ var turnip = require('./lib'),
 
 
 
-var server, levels;
+var server;
 server = turnip.create(settings);
 server.start(function () {
-    console.log('listening');
+    server.log('info', 'turnip listening');
+    server.log('info', server.info);
 });
