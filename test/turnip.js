@@ -1,9 +1,10 @@
-/*global describe:false, before:false*/
+/*global describe:false, before:false, after:false, it:false*/
 'use strict';
 
-var Hapi = require('hapi'),
-    npm = require('npm'),
-    assert = require('assert');
+var path = require('path'),
+    turnip = require('../lib/index'),
+    assert = require('chai').assert;
+
 
 
 describe('turnip', function () {
@@ -11,28 +12,73 @@ describe('turnip', function () {
     var server;
 
     before(function (next) {
-        var config = {
-            paths: ['http://10.9.110.82:5984/registry/_design/app/_rewrite/', 'http://registry.npmjs.org/']
-        };
+        process.chdir(path.join(__dirname, 'fixtures'));
 
-        server = new Hapi.Server(1234);
-        server.plugin.require('../', config, function () {
-            server.start();
+        var settings = require('./fixtures/config/settings.json');
+        server = turnip.create(settings);
+        server.start(next);
+    });
+
+    after(function (next) {
+        server.stop(next);
+    });
+
+
+    it('should return a private package', function (next) {
+        server.inject({ url: 'http://localhost/cdb'}, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(200, res.statusCode);
             next();
         });
     });
 
-    before(function (next) {
-        npm.load({ registry: 'http://localhost:1234' }, function (err) {
-            assert.ok(!err, 'Could not initialize npm');
+
+    it('should return a 200 for a HEAD request of a private package', function (next) {
+        server.inject({ method:'HEAD', url: 'http://localhost/cdb'}, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(200, res.statusCode);
             next();
         });
     });
 
 
-    it('should pass all npm tests', function (next) {
-        process.chdir('./node_modules/npm/');
-        npm.commands.test([], next);
+    it('should return a public package', function (next) {
+        server.inject({ url: 'http://localhost/express'}, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(200, res.statusCode);
+            next();
+        });
     });
+
+
+    it('should return a 200 for a HEAD request of a public package', function (next) {
+        server.inject({ method:'HEAD', url: 'http://localhost/express'}, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(200, res.statusCode);
+            next();
+        });
+    });
+
+
+    it('should return a 404 for an unknown package', function (next) {
+        server.inject({ url: 'http://localhost/å' }, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(404, res.statusCode);
+            next();
+        });
+    });
+
+    it('should return a 404 for a HEAD request of an unknown package', function (next) {
+        server.inject({ method: 'HEAD', url: 'http://localhost/å' }, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(404, res.statusCode);
+            next();
+        });
+    });
+
+//    it('should pass all npm tests', function (next) {
+//        process.chdir('./node_modules/npm/');
+//        npm.commands.test([], next);
+//    });
 
 });
