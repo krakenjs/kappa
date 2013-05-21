@@ -27,3 +27,21 @@ For write operations the proxy will only attempt to write to the FIRST registry.
 - Unsafe rewrites need to be enabled. :/
 
 - Make sure registry table has a record with '_id' = 'error: forbidden' and 'forbidden' = 'must supply latest _rev to update existing package'
+
+
+
+##### Installation Notes
+
+```bash
+
+$ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" turnip
+$ cd /x/web/
+$ git clone git://github.paypal.com/ertoth/turnip.git
+$ sudo chown -R turnip:turnip /x/web/turnip/
+$ sudo cp /x/web/turnip/scripts/turnip /etc/init.d/
+$ sudo /sbin/service turnip start
+$ sudo cp /x/web/turnip/scripts/turnip_monitrc /etc/monit.d/
+$ tail /var/log/turnip.log
+$ sudo cp /x/web/turnip/scripts/turnip.conf /etc/nginx/conf.d/
+$ sudo /etc/init.d/nginx restart
+```

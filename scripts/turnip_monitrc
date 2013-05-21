@@ -1,0 +1,10 @@
+#!monit
+set logfile /var/log/monit/turnip.log
+
+check process turnip with pidfile "/var/run/turnip.pid"
+    start program = "/sbin/service start turnip"
+    stop program  = "/sbin/service stop turnip"
+    if failed port 8001 protocol HTTP
+        request /
+        with timeout 10 seconds
+        then restart
