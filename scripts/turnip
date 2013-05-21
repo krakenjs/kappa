@@ -10,41 +10,53 @@ NAME=turnip
 APP_DIR=/x/web/turnip
 APP_MAIN=index.js
 PORT=8001
+RETVAL=0
 
 user=$NAME
 node=/x/home/ertoth/node-v0.10.7/out/Release/node # FIXME
 opts=$APP_DIR/$APP_MAIN
 pidfile=/var/run/$NAME.pid
 logfile=/var/log/$NAME.log
+lockfile=/var/lock/turnip
+
 
 # Source function library
 . /etc/init.d/functions
 
 
 start() {
-    #[ -x $node ] || exit 5
-    echo "Starting $NAME"
+       [ -x $node ] || exit 5
+       echo "Starting $NAME"
 
-    # Create the log and pid files, making sure that
-    # the target use has access to them
-    touch $logfile
-    chown $user $logfile
+       if [ -s ${pidfile} ]; then
+           RETVAL=1
+           echo "$NAME is already running"
+           echo_warning
+       else
+           runuser -s /bin/bash - $user -c "TURNIP_PORT=${PORT} nohup ${node} ${opts}" >> ${logfile} 2>&1 &
 
-    touch $pidfile
-    chown $user $pidfile
+           RETVAL=$?
+           [ $RETVAL = 0 ] && touch ${lockfile}
 
-    daemon --user $user --pidfile $pidfile --check $node  "TURNIP_PORT=$PORT $node $opts >> $logfile 2>&1 &" && echo_success || echo_failure
+           PID=$!
+           if [ -z $PID ]; then
+               echo_failure
+           else
+               echo
+               echo $PID > ${pidfile}
+               echo_success
+           fi
+       fi
 
-    retval=$?
-    return $retval
+       return $RETVAL
 }
 
 stop() {
     echo "Shutting down $NAME"
-    killproc $node
-#    [ $retval -eq 0 ] && rm -f $lockfile
-    retval=$?
-    return $retval
+    killproc -p ${pidfile} ${node}
+    RETVAL=$?
+    [ $RETVAL = 0 ] && rm -f ${lockfile} ${pidfile}
+    return $RETVAL
 }
 
 case "$1" in

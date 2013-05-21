@@ -40,7 +40,9 @@ $ git clone git://github.paypal.com/ertoth/turnip.git
 $ sudo chown -R turnip:turnip /x/web/turnip/
 $ sudo cp /x/web/turnip/scripts/turnip /etc/init.d/
 $ sudo /sbin/service turnip start
-$ sudo cp /x/web/turnip/scripts/turnip_monitrc /etc/monit.d/
+$ sudo chmod 700 /x/web/turnip/scripts/turnip_monitrc
+$ sudo monit -d 60 -c /x/web/turnip/scripts/turnip_monitrc
+$ # sudo cp /x/web/turnip/scripts/turnip_monitrc /etc/monit.d/
 $ tail /var/log/turnip.log
 $ sudo cp /x/web/turnip/scripts/turnip.conf /etc/nginx/conf.d/
 $ sudo /etc/init.d/nginx restart
