@@ -1,0 +1,10 @@
+/var/log/turnip.log {
+        daily
+        missingok
+        rotate 52
+        compress
+        delaycompress
+        copytruncate
+        notifempty
+        create 640 turnip turnip
+}
