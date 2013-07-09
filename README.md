@@ -29,6 +29,15 @@ For write operations the proxy will only attempt to write to the FIRST registry.
 - Make sure registry table has a record with '_id' = 'error: forbidden' and 'forbidden' = 'must supply latest _rev to update existing package'
 
 
+##### Known Issues
+###### name.trim is not a function
+```javascript
+Error: case_clause {[{<<"message">>,<<"name.trim is not a function">>}]}
+```
+This error requires a CouchDB restart:
+```bash
+$ sudo /sbin/service couchdb restart
+```
 
 ##### Installation Notes
 
