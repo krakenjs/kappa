@@ -13,7 +13,7 @@
   "author": "Erik Toth <ertoth@paypal.com>",
   "license": "MIT",
   "dependencies": {
-    "hapi": "~1.2.0"
+    "hapi": "~1.11.x"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
