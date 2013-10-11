@@ -1,0 +1,10 @@
+#!monit
+set logfile /var/log/monit/kappa.log
+
+check process kappa with pidfile "/var/run/kappa.pid"
+    start program = "/sbin/service start kappa"
+    stop program  = "/sbin/service stop kappa"
+    if failed port 8001 protocol HTTP
+        request /
+        with timeout 10 seconds
+        then restart

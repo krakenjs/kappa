@@ -1,7 +1,7 @@
-turnip
+Kappa
 ======
 
-![turnip](https://github.paypal.com/ertoth/turnip/raw/master/img/tunip.png "turnip")
+![kappa](https://github.paypal.com/webcore/turnip/raw/seaMonster/img/kappa.png "kappa")
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
@@ -43,16 +43,16 @@ $ sudo /sbin/service couchdb restart
 
 ```bash
 
-$ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" turnip
+$ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" kappa
 $ cd /x/web/
-$ git clone git://github.paypal.com/ertoth/turnip.git
-$ sudo chown -R turnip:turnip /x/web/turnip/
-$ sudo cp /x/web/turnip/scripts/turnip /etc/init.d/
-$ sudo /sbin/service turnip start
-$ sudo chmod 700 /x/web/turnip/scripts/turnip_monitrc
-$ sudo monit -d 60 -c /x/web/turnip/scripts/turnip_monitrc
-$ # sudo cp /x/web/turnip/scripts/turnip_monitrc /etc/monit.d/
-$ tail /var/log/turnip.log
-$ sudo cp /x/web/turnip/scripts/turnip.conf /etc/nginx/conf.d/
+$ git clone git://github.com/paypal/kappa.git
+$ sudo chown -R kappa:kappa /x/web/kappa/
+$ sudo cp /x/web/kappa/scripts/kappa /etc/init.d/
+$ sudo /sbin/service kappa start
+$ sudo chmod 700 /x/web/kappa/scripts/kappa_monitrc
+$ sudo monit -d 60 -c /x/web/kappa/scripts/kappa_monitrc
+$ # sudo cp /x/web/kappa/scripts/kappa_monitrc /etc/monit.d/
+$ tail /var/log/kappa.log
+$ sudo cp /x/web/kappa/scripts/kappa.conf /etc/nginx/conf.d/
 $ sudo /etc/init.d/nginx restart
 ```
