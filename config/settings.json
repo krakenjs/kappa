@@ -1,5 +1,8 @@
 {
-    "paths": ["http://localhost:8080"],
+    "paths": [
+        "http://localhost:8080",
+        "https://registry.npmjs.org/"
+    ],
     "vhost": "localhost",
     "logLevel": "debug"
 }
