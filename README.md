@@ -41,6 +41,8 @@ $ sudo /sbin/service couchdb restart
 
 ##### Installation Notes
 
+If not ports are specified, it will default to 8001
+
 ```bash
 
 $ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" kappa
