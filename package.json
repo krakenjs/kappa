@@ -3,6 +3,9 @@
   "version": "0.11.1",
   "description": "A hierarchical npm-registry proxy to make private registries easier. (Based on npm-delegate by @jden)",
   "main": "index.js",
+  "bin":{
+    "kappa":"./index.js"
+  },
   "keywords": [
     "npm",
     "registry",
