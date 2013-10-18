@@ -5,11 +5,13 @@ Kappa
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
-Configure the plugin with a paths array of repositories to hit in order:
+Configure the plugin (`./config/settings.json`) with a paths array of repositories to hit in order. The following example shows
+a private couchDB based npm repository, followed by the public npm repository:
+
 
 ```javascript
 {
-    paths: ['http://10.9.110.82:5984/registry/_design/app/_rewrite/', 'http://registry.npmjs.org/']
+    paths: ['http://privateServer:5984/registry/_design/app/_rewrite/', 'http://registry.npmjs.org/']
 }
 ```
 
