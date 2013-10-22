@@ -2,12 +2,12 @@
 
 # chkconfig: 345 80 20
 # description: A Private NPM Server Proxy
-# processname: turnip
-# pidfile: /var/run/turnip.pid
-# logfile: /var/log/turnip.log
+# processname: kappa
+# pidfile: /var/run/kappa.pid
+# logfile: /var/log/kappa.log
 
-NAME=turnip
-APP_DIR=/x/web/turnip
+NAME=kappa
+APP_DIR=/x/web/kappa
 APP_MAIN=index.js
 PORT=8001
 RETVAL=0
@@ -17,7 +17,7 @@ node=/x/home/ertoth/node-v0.10.7/out/Release/node # FIXME
 opts=$APP_DIR/$APP_MAIN
 pidfile=/var/run/$NAME.pid
 logfile=/var/log/$NAME.log
-lockfile=/var/lock/turnip
+lockfile=/var/lock/kappa
 
 
 # Source function library
@@ -33,7 +33,7 @@ start() {
            echo "$NAME is already running"
            echo_warning
        else
-           runuser -s /bin/bash - $user -c "TURNIP_PORT=${PORT} nohup ${node} ${opts}" >> ${logfile} 2>&1 &
+           runuser -s /bin/bash - $user -c "KAPPA_PORT=${PORT} nohup ${node} ${opts}" >> ${logfile} 2>&1 &
 
            RETVAL=$?
            [ $RETVAL = 0 ] && touch ${lockfile}

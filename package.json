@@ -1,15 +1,18 @@
 {
-  "name": "turnip",
+  "name": "kappa",
   "version": "0.11.1",
   "description": "A hierarchical npm-registry proxy to make private registries easier. (Based on npm-delegate by @jden)",
   "main": "index.js",
+  "bin":{
+    "kappa":"./index.js"
+  },
   "keywords": [
     "npm",
     "registry",
     "private",
     "proxy"
   ],
-  "repository": "git@github.paypal.com:ertoth/turnip.git",
+  "repository": "https://github.com/paypal/kappa.git",
   "author": "Erik Toth <ertoth@paypal.com>",
   "licenses": [
     {
@@ -18,7 +21,9 @@
     }
   ],
   "dependencies": {
-    "hapi": "~1.11.x"
+    "hapi": "~1.11.x",
+    "bunyan":"~0.22.0",
+    "async":"~0.2.9"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
