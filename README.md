@@ -1,15 +1,17 @@
-turnip
+Kappa
 ======
 
-![turnip](https://github.paypal.com/ertoth/turnip/raw/master/img/tunip.png "turnip")
+![kappa](https://github.paypal.com/lmarkus/turnip/raw/seaMonster/img/kappa.png "kappa")
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
-Configure the plugin with a paths array of repositories to hit in order:
+Configure the plugin (`./config/settings.json`) with a paths array of repositories to hit in order. The following example shows
+a private couchDB based npm repository, followed by the public npm repository:
+
 
 ```javascript
 {
-    paths: ['http://10.9.110.82:5984/registry/_design/app/_rewrite/', 'http://registry.npmjs.org/']
+    paths: ['http://privateServer:5984/registry/_design/app/_rewrite/', 'http://registry.npmjs.org/']
 }
 ```
 
@@ -41,18 +43,20 @@ $ sudo /sbin/service couchdb restart
 
 ##### Installation Notes
 
+If not ports are specified, it will default to 8001
+
 ```bash
 
-$ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" turnip
+$ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" kappa
 $ cd /x/web/
-$ git clone git://github.paypal.com/ertoth/turnip.git
-$ sudo chown -R turnip:turnip /x/web/turnip/
-$ sudo cp /x/web/turnip/scripts/turnip /etc/init.d/
-$ sudo /sbin/service turnip start
-$ sudo chmod 700 /x/web/turnip/scripts/turnip_monitrc
-$ sudo monit -d 60 -c /x/web/turnip/scripts/turnip_monitrc
-$ # sudo cp /x/web/turnip/scripts/turnip_monitrc /etc/monit.d/
-$ tail /var/log/turnip.log
-$ sudo cp /x/web/turnip/scripts/turnip.conf /etc/nginx/conf.d/
+$ git clone git://github.com/paypal/kappa.git
+$ sudo chown -R kappa:kappa /x/web/kappa/
+$ sudo cp /x/web/kappa/scripts/kappa /etc/init.d/
+$ sudo /sbin/service kappa start
+$ sudo chmod 700 /x/web/kappa/scripts/kappa_monitrc
+$ sudo monit -d 60 -c /x/web/kappa/scripts/kappa_monitrc
+$ # sudo cp /x/web/kappa/scripts/kappa_monitrc /etc/monit.d/
+$ tail /var/log/kappa.log
+$ sudo cp /x/web/kappa/scripts/kappa.conf /etc/nginx/conf.d/
 $ sudo /etc/init.d/nginx restart
 ```

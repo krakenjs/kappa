@@ -2,12 +2,12 @@
 'use strict';
 
 var path = require('path'),
-    turnip = require('../lib/index'),
+    kappa = require('../lib/index'),
     assert = require('chai').assert;
 
 
 
-describe('turnip', function () {
+describe('kappa', function () {
 
     var server;
 
@@ -15,7 +15,7 @@ describe('turnip', function () {
         process.chdir(path.join(__dirname, 'fixtures'));
 
         var settings = require('./fixtures/config/settings.json');
-        server = turnip.create(settings);
+        server = kappa.create(settings);
         server.start(next);
     });
 

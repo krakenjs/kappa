@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*───────────────────────────────────────────────────────────────────────────*\
 │  Copyright (C) 2013 eBay, Inc.                                              │
 │                                                                             │
@@ -17,14 +18,14 @@
 \*───────────────────────────────────────────────────────────────────────────*/
 'use strict';
 
-var turnip = require('./lib'),
+var kappa = require('./lib'),
     settings = require('./config/settings.json');
 
 
 
 var server;
-server = turnip.create(settings);
+server = kappa.create(settings);
 server.start(function () {
-    server.log('info', 'turnip listening');
+    server.log('info', 'Kappa is listening');
     server.log('info', server.info);
 });

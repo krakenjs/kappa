@@ -1,4 +1,4 @@
-/var/log/turnip.log {
+/var/log/kappa.log {
         daily
         missingok
         rotate 52
@@ -6,5 +6,5 @@
         delaycompress
         copytruncate
         notifempty
-        create 640 turnip turnip
+        create 640 kappa kappa
 }
