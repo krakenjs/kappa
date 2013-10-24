@@ -1,9 +1,8 @@
 {
     "paths": [
-        "http://localhost:5984/registry/_design/ghost/_rewrite/",
-        "http://localhost:8080",
+        "http://lcoalhost:5984/registry/_design/ghost/_rewrite/",
         "https://registry.npmjs.org/"
     ],
-    "vhost": "localhost",
-    "logLevel": "debug"
+    "vhost": "npm.mydomain.com",
+    "logLevel": "info"
 }
