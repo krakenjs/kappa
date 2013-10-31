@@ -15,17 +15,14 @@ node_modules
 npm-debug.log
 xunit.xml
 
-# Project Specifics #
-#####################
+
 .project
 .idea
 .settings
+*.iml
 
 
-# OS generated files #
-######################
 .DS_Store*
 ehthumbs.db
 Icon?
 Thumbs.db
-*.iml
