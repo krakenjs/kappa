@@ -1,7 +1,7 @@
 Kappa
 ======
 
-![kappa](https://github.paypal.com/lmarkus/turnip/raw/seaMonster/img/kappa.png "kappa")
+![kappa](https://github.paypal.com/webcore/kappa/raw/master/img/kappa.png "kappa")
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
