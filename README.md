@@ -39,22 +39,3 @@ This error requires a CouchDB restart:
 $ sudo /sbin/service couchdb restart
 ```
 
-##### Installation Notes
-
-If not ports are specified, it will default to 8001
-
-```bash
-
-$ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" kappa
-$ cd /x/web/
-$ git clone git://github.com/paypal/kappa.git
-$ sudo chown -R kappa:kappa /x/web/kappa/
-$ sudo cp /x/web/kappa/scripts/kappa /etc/init.d/
-$ sudo /sbin/service kappa start
-$ sudo chmod 700 /x/web/kappa/scripts/kappa_monitrc
-$ sudo monit -d 60 -c /x/web/kappa/scripts/kappa_monitrc
-$ # sudo cp /x/web/kappa/scripts/kappa_monitrc /etc/monit.d/
-$ tail /var/log/kappa.log
-$ sudo cp /x/web/kappa/scripts/kappa.conf /etc/nginx/conf.d/
-$ sudo /etc/init.d/nginx restart
-```
