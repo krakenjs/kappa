@@ -1,8 +1,6 @@
 Kappa
 ======
 
-![kappa](https://github.paypal.com/webcore/kappa/raw/master/img/kappa.png "kappa")
-
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
 Configure the plugin (`./config/settings.json`) with a paths array of repositories to hit in order. The following example shows
@@ -41,22 +39,3 @@ This error requires a CouchDB restart:
 $ sudo /sbin/service couchdb restart
 ```
 
-##### Installation Notes
-
-If not ports are specified, it will default to 8001
-
-```bash
-
-$ sudo /usr/sbin/adduser -r --shell /bin/bash --comment "Private NPM Server User Account" kappa
-$ cd /x/web/
-$ git clone git://github.com/paypal/kappa.git
-$ sudo chown -R kappa:kappa /x/web/kappa/
-$ sudo cp /x/web/kappa/scripts/kappa /etc/init.d/
-$ sudo /sbin/service kappa start
-$ sudo chmod 700 /x/web/kappa/scripts/kappa_monitrc
-$ sudo monit -d 60 -c /x/web/kappa/scripts/kappa_monitrc
-$ # sudo cp /x/web/kappa/scripts/kappa_monitrc /etc/monit.d/
-$ tail /var/log/kappa.log
-$ sudo cp /x/web/kappa/scripts/kappa.conf /etc/nginx/conf.d/
-$ sudo /etc/init.d/nginx restart
-```

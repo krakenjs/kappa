@@ -1,9 +1,0 @@
-{
-    "source": "http://isaacs.iriscouch.com/public_users/",
-    "target": "public_users",
-    "continuous":true,
-    "create_target": true,
-    "doc_ids": [
-        "_design/_auth"
-    ]
-}
