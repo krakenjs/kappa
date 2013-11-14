@@ -4,6 +4,6 @@
         "https://registry.npmjs.org/"
     ],
     "port":8000,
-    "vhost": "npm.mydomain.com",
+    "vhost": "localhost",
     "logLevel": "info"
 }
