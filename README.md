@@ -11,8 +11,8 @@ $ npm init
 # call the module whatever you want: `my-private-repo`
 
 $ npm install --save kappa
-$ touch config.json
-# see the config options below
+$ vi config.json
+# see the example config (example/config.json) and kappa config options below
 ```
 
 To start your server, drop the 2 file from the above step (package.json & config.json) on your server...
