@@ -12,7 +12,7 @@ describe('kappa', function () {
 
     settings = {
         "paths": [
-            "http://stage2p2407.qa.paypal.com:5984/registry/_design/ghost/_rewrite/",
+            "http://localhost:5984/registry/_design/ghost/_rewrite/",
             "https://registry.npmjs.org/"
         ],
         "vhost": "npm.mydomain.com",

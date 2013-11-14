@@ -1,6 +1,26 @@
 Kappa
 ======
 
+##### Usage
+To define your server:
+```bash
+$ npm init
+# call the module whatever you want: `my-private-repo`
+
+$ npm install --save kappa
+$ touch config.json
+# see the config options below
+```
+
+To start your server, drop the 2 file from the above step (package.json & config.json) on your server...
+```bash
+$ npm install -g hapi
+$ npm install
+$ hapi -c config.json
+```
+
+
+
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
 Configure the plugin (`./config/settings.json`) with a paths array of repositories to hit in order. The following example shows
