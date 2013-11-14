@@ -50,7 +50,7 @@ This error requires a CouchDB restart:
 $ sudo /sbin/service couchdb restart
 ```
 
-# Contributing to the Kappa
+# Contributing to Kappa
 
 ### Bug Fixes
 
