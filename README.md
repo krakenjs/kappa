@@ -26,8 +26,8 @@ $ hapi -c config.json
 ##### Config
 kappa configuration currently supports the following parameters
 
-`vhost` - the virtual host associated with the kappa server
-`paths` - any ordered array of npm repositories to use, e.g. `['http://privateServer:5984/registry/_design/ghost/_rewrite/', 'http://registry.npmjs.org/']`
+- `vhost` - the virtual host associated with the kappa server
+- `paths` - any ordered array of npm repositories to use, e.g. `['http://privateServer:5984/registry/_design/ghost/_rewrite/', 'http://registry.npmjs.org/']`
 
 For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry.
 If the requested module is not found it continues to the next registry, and so on.
