@@ -51,7 +51,7 @@ If the requested module is not found it continues to the next registry, and so o
 
 For write operations the proxy will only attempt to write to the FIRST registry. All auth occurs with the first registry as well.
 
-
+<!--
 <br>
 ##### **¡NPM GOTCHAS!**
 - Be sure to comment out the block called `// legacy kludge` ... `// end kludge` in
@@ -71,4 +71,4 @@ This error requires a CouchDB restart:
 ```bash
 $ sudo /sbin/service couchdb restart
 ```
-
+-->
