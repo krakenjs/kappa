@@ -15,7 +15,6 @@ describe('Kappa - Package fetching', function () {
 
         var settings = require('./fixtures/config/settings.json');
         server = kappa.create(settings);
-        console.log("running");
         server.start(next);
     });
 
@@ -25,22 +24,21 @@ describe('Kappa - Package fetching', function () {
 
 
     it('should return a private package', function (next) {
-        server.inject({ url: 'http://localhost/lusca'}, function (res) {
+        server.inject({ url: 'http://localhost/cdb'}, function (res) {
             assert.isObject(res);
-            //console.log(res);
             assert.strictEqual(200, res.statusCode);
             next();
         });
     });
 
 
-     it('should return a 200 for a HEAD request of a private package', function (next) {
-     server.inject({ method:'HEAD', url: 'http://localhost/lusca'}, function (res) {
-     assert.isObject(res);
-     assert.strictEqual(200, res.statusCode);
-     next();
-     });
-     });
+    it('should return a 200 for a HEAD request of a private package', function (next) {
+        server.inject({ method: 'HEAD', url: 'http://localhost/cdb'}, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(200, res.statusCode);
+            next();
+        });
+    });
 
 
     it('should return a public package', function (next) {
@@ -52,13 +50,13 @@ describe('Kappa - Package fetching', function () {
     });
 
 
-     it('should return a 200 for a HEAD request of a public package', function (next) {
-     server.inject({ method:'HEAD', url: 'http://localhost/express'}, function (res) {
-     assert.isObject(res);
-     assert.strictEqual(200, res.statusCode);
-     next();
-     });
-     });
+    it('should return a 200 for a HEAD request of a public package', function (next) {
+        server.inject({ method: 'HEAD', url: 'http://localhost/express'}, function (res) {
+            assert.isObject(res);
+            assert.strictEqual(200, res.statusCode);
+            next();
+        });
+    });
 
 
     it('should return a 404 for an unknown package', function (next) {
@@ -118,7 +116,7 @@ describe('Kappa - port startup options', function () {
         });
     });
 
-    it('should be running on port specified by the environment, overriding the settings file',function(next){
+    it('should be running on port specified by the environment, overriding the settings file', function (next) {
         process.env['KAPPA_PORT'] = 8002;
         server = kappa.create(settings);
         server.start(function () {
