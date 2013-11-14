@@ -1,5 +1,0 @@
-{
-    "paths": ["http://localhost:5984/registry/_design/app/_rewrite/", "http://registry.npmjs.org/"],
-    "vhost": "localhost",
-    "logLevel": "debug"
-}
