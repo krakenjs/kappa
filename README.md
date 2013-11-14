@@ -4,19 +4,24 @@ Kappa
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi plugin used to proxy npm to support private npm repos without replicating the entire public registry.
 
-##### Quickstart
-To define your server:
+#### Quickstart
+Deploying a kappa server only requires 2 artifacts. These files can be put under source control and
+deployed via any mechansim.
+- `package.json` file 
+- a Hapi Composer manifest (`config.json`)
+ 
+
+
+First, create a `package.json` file for your server, adding `kappa` as a dependency and a startup script
+to kick off the server.
 ```bash
 $ npm init
-# call the module whatever you want: `my-private-repo`
-
-$ npm install --save kappa
-$ vi config.json
-# see the example config (example/config.json) and kappa config options below
+# ...
+$ npm install --save kappa # or manually add kappa to your dependencies
 ```
 
-and then either add a start script to your package.json
-```json
+```javascript
+// package.json
 {
     "scripts": {
         "start": "./node_modules/.bin/hapi -c config.json"
@@ -24,20 +29,22 @@ and then either add a start script to your package.json
 }
 ```
 
-or install hapi globally and start the server manually
+Then, create a `config.json` file which is a [Hapi Composer manifest](http://spumko.github.io/resource/api/#hapi-composer)
+file. This will have any custom settings for your particular installation. (See the example config `example/config.json`
+for layout and the `config` section below for kappa-specific configuration options.)
 
+Once the two artifacts have been deployed to your server, simply run it.
 ```bash
-$ npm install -g hapi
 $ npm install
-$ hapi -c config.json
+$ npm start
 ```
 
 
-##### Config
+#### Config
 kappa configuration currently supports the following parameters
 
-- `vhost` - the virtual host associated with the kappa server
-- `paths` - any ordered array of npm repositories to use, e.g. `['http://privateServer:5984/registry/_design/ghost/_rewrite/', 'http://registry.npmjs.org/']`
+- `vhost` - the virtual host associated with the kappa server, e.g. 'npm.mydomain.com'
+- `paths` (optional) - any ordered array of npm repositories to use, e.g. Defaults to `['http://localhost:5984/registry/_design/ghost/_rewrite/', 'https://registry.npmjs.org/']`
 
 For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry.
 If the requested module is not found it continues to the next registry, and so on.
