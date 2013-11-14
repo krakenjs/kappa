@@ -15,7 +15,17 @@ $ vi config.json
 # see the example config (example/config.json) and kappa config options below
 ```
 
-To start your server, drop the 2 files from the above step (package.json & config.json) on your server...
+and then either add a start script to your package.json
+```json
+{
+    "scripts": {
+        "start": "./node_modules/.bin/hapi -c config.json"
+    }
+}
+```
+
+or install hapi globally and start the server manually
+
 ```bash
 $ npm install -g hapi
 $ npm install
