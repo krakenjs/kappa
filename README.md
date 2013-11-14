@@ -1,7 +1,10 @@
 Kappa
 ======
 
-##### Usage
+Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
+is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
+
+##### Quickstart
 To define your server:
 ```bash
 $ npm init
@@ -20,18 +23,11 @@ $ hapi -c config.json
 ```
 
 
+##### Config
+kappa configuration currently supports the following parameters
 
-Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
-is a hapi ~~plugin~~ application used to proxy npm to support private npm repos without replicating the entire public registry.
-Configure the plugin (`./config/settings.json`) with a paths array of repositories to hit in order. The following example shows
-a private couchDB based npm repository, followed by the public npm repository:
-
-
-```javascript
-{
-    paths: ['http://privateServer:5984/registry/_design/app/_rewrite/', 'http://registry.npmjs.org/']
-}
-```
+`vhost` - the virtual host associated with the kappa server
+`paths` - any ordered array of npm repositories to use, e.g. `['http://privateServer:5984/registry/_design/ghost/_rewrite/', 'http://registry.npmjs.org/']`
 
 For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry.
 If the requested module is not found it continues to the next registry, and so on.

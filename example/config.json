@@ -8,7 +8,7 @@
     "plugins": {
         "kappa": [
             {
-                
+
             },
             {
             "vhost": "npm.myorg.com",
