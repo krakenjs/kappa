@@ -15,7 +15,7 @@ $ vi config.json
 # see the example config (example/config.json) and kappa config options below
 ```
 
-To start your server, drop the 2 file from the above step (package.json & config.json) on your server...
+To start your server, drop the 2 files from the above step (package.json & config.json) on your server...
 ```bash
 $ npm install -g hapi
 $ npm install
@@ -26,8 +26,8 @@ $ hapi -c config.json
 ##### Config
 kappa configuration currently supports the following parameters
 
-`vhost` - the virtual host associated with the kappa server
-`paths` - any ordered array of npm repositories to use, e.g. `['http://privateServer:5984/registry/_design/ghost/_rewrite/', 'http://registry.npmjs.org/']`
+- `vhost` - the virtual host associated with the kappa server
+- `paths` - any ordered array of npm repositories to use, e.g. `['http://privateServer:5984/registry/_design/ghost/_rewrite/', 'http://registry.npmjs.org/']`
 
 For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry.
 If the requested module is not found it continues to the next registry, and so on.

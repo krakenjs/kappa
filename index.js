@@ -17,18 +17,21 @@
  \*───────────────────────────────────────────────────────────────────────────*/
 'use strict';
 
-var log = require('./lib/log'),
+var Hapi = require('hapi'),
+    log = require('./lib/log'),
     stats = require('./lib/stats'),
-    delegate = require('./lib/delegate');
+    delegate = require('./lib/delegate'),
+    defaults = require('./config/defaults');
 
 
 
 exports.register = function (plugin, options, next) {
-    var vhost, read, write, logger;
+    var settings, read, write, vhost, logger;
 
-    read = delegate.createHandler(options.paths);
-    write = delegate.createHandler(options.paths.slice(0, 1));
-    vhost = options.vhost;
+    settings = Hapi.utils.applyToDefaults(defaults, options);
+    read = delegate.createHandler(settings.paths);
+    write = delegate.createHandler(settings.paths.slice(0, 1));
+    vhost = settings.vhost;
 
     // GETs always get proxied
     plugin.route({
@@ -138,7 +141,7 @@ exports.register = function (plugin, options, next) {
 
 
     // Logging
-    logger = log.createLogger(options);
+    logger = log.createLogger(settings);
     plugin.events.on('log', logger.log.bind(logger));
 
     plugin.events.on('request', function (req, event) {
