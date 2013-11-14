@@ -33,7 +33,7 @@ describe('Kappa - Package fetching', function () {
         });
     });
 
-    /*
+
      it('should return a 200 for a HEAD request of a private package', function (next) {
      server.inject({ method:'HEAD', url: 'http://localhost/lusca'}, function (res) {
      assert.isObject(res);
@@ -41,7 +41,7 @@ describe('Kappa - Package fetching', function () {
      next();
      });
      });
-     */
+
 
     it('should return a public package', function (next) {
         server.inject({ url: 'http://localhost/express'}, function (res) {
@@ -51,7 +51,7 @@ describe('Kappa - Package fetching', function () {
         });
     });
 
-    /*
+
      it('should return a 200 for a HEAD request of a public package', function (next) {
      server.inject({ method:'HEAD', url: 'http://localhost/express'}, function (res) {
      assert.isObject(res);
@@ -59,7 +59,7 @@ describe('Kappa - Package fetching', function () {
      next();
      });
      });
-     */
+
 
     it('should return a 404 for an unknown package', function (next) {
         server.inject({ url: 'http://localhost/å' }, function (res) {
