@@ -1,24 +1,46 @@
-/*global describe:false, it:false*/
+/*global describe:false, it:false, before:false, after:false*/
 'use strict';
 
 var assert = require('chai').assert,
+    url = require('url'),
+    nock = require('nock'),
     Hapi = require('hapi');
 
 
 
 describe('kappa', function () {
 
-    var settings, server;
+    var expects, settings, server;
+
+    expects = require('./expects');
 
     settings = {
-        "paths": [
-            "http://localhost:5984/registry/_design/ghost/_rewrite/",
-            "https://registry.npmjs.org/"
-        ],
-        "vhost": "npm.mydomain.com",
-        "logLevel": "info"
-
+        paths: expects.map(function (defs) {
+            return defs.registry
+        }),
+        vhost: 'npm.mydomain.com',
+        logLevel: 'error'
     };
+
+
+    before(function () {
+
+        expects.forEach(function (def) {
+            var registry, uri, mock;
+
+            registry = def.registry;
+            uri = url.parse(registry);
+            mock = nock(uri.protocol + '//' + uri.host);
+
+            Object.keys(def.requests).forEach(function (method) {
+                def.requests[method].forEach(function (req) {
+                    mock = mock[method](uri.pathname + req.path);
+                    mock = mock.reply.apply(mock, req.reply);
+                });
+            });
+        });
+
+    });
 
 
     it('should register the plugin', function (done) {
@@ -40,7 +62,7 @@ describe('kappa', function () {
             url: '/cdb'
         }, function (res) {
             assert(res);
-            assert.strictEqual(res.headers['content-type'], 'application/json');
+            assert.ok(/^application\/json/.test(res.headers['content-type']));
             assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
             assert.strictEqual(res.statusCode, 200);
             done();
@@ -57,7 +79,7 @@ describe('kappa', function () {
             url: '/cdb'
         }, function (res) {
             assert(res);
-            assert.strictEqual(res.headers['content-type'], 'application/json');
+            assert.ok(/^application\/json/.test(res.headers['content-type']));
             assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
             assert.strictEqual(res.statusCode, 200);
             done();
@@ -74,7 +96,7 @@ describe('kappa', function () {
             url: '/core-util-is'
         }, function (res) {
             assert(res);
-            assert.strictEqual(res.headers['content-type'], 'application/json');
+            assert.ok(/^application\/json/.test(res.headers['content-type']));
             assert.strictEqual(res.headers['x-registry'], settings.paths[1]);
             assert.strictEqual(res.statusCode, 200);
             done();
@@ -91,7 +113,7 @@ describe('kappa', function () {
             url: '/core-util-is'
         }, function (res) {
             assert(res);
-            assert.strictEqual(res.headers['content-type'], 'application/json');
+            assert.ok(/^application\/json/.test(res.headers['content-type']));
             assert.strictEqual(res.headers['x-registry'], settings.paths[1]);
             assert.strictEqual(res.statusCode, 200);
             done();

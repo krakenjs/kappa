@@ -11,12 +11,12 @@ describe('stats', function () {
     var settings, server;
 
     settings = {
-        "paths": [
-            "http://localhost:5984/registry/_design/ghost/_rewrite/",
-            "https://registry.npmjs.org/"
+        paths: [
+            'http://localhost:5984/registry/_design/ghost/_rewrite/',
+            'https://registry.npmjs.org/'
         ],
-        "vhost": "npm.mydomain.com",
-        "logLevel": "info"
+        vhost: 'npm.mydomain.com',
+        logLevel: 'error'
 
     };
 
