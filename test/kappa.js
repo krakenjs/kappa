@@ -43,10 +43,21 @@ describe('kappa', function () {
     });
 
 
-    it('should register the plugin', function (done) {
+    it('should support the `require` api', function (done) {
 
         server = new Hapi.Server();
         server.pack.require('../', settings, function (err) {
+            assert.ok(!err);
+            done();
+        });
+
+    });
+
+
+    it('should support the `register` api', function (done) {
+
+        server = new Hapi.Server();
+        server.pack.register(require('../'), settings, function (err) {
             assert.ok(!err);
             done();
         });
