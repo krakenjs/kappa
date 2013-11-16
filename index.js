@@ -18,140 +18,147 @@
 'use strict';
 
 var Hapi = require('hapi'),
+    pkg = require('./package'),
     log = require('./lib/log'),
     stats = require('./lib/stats'),
     delegate = require('./lib/delegate'),
     defaults = require('./config/defaults');
 
 
+module.exports = {
 
-exports.register = function (plugin, options, next) {
-    var settings, read, write, vhost, logger;
+    name: pkg.name,
 
-    settings = Hapi.utils.applyToDefaults(defaults, options);
-    read = delegate.createHandler(settings.paths);
-    write = delegate.createHandler(settings.paths.slice(0, 1));
-    vhost = settings.vhost;
+    version: pkg.version,
 
-    // GETs always get proxied
-    plugin.route({
-        method: 'GET',
-        path: '/{p*}',
-        vhost: vhost,
-        config: {
-            handler: read,
-            payload: 'stream'
-        }
-    });
+    register: function (plugin, options, next) {
+        var settings, read, write, vhost, logger;
 
+        settings = Hapi.utils.applyToDefaults(defaults, options);
+        read = delegate.createHandler(settings.paths);
+        write = delegate.createHandler(settings.paths.slice(0, 1));
+        vhost = settings.vhost;
 
-    // Statistics reporter
-    plugin.route({
-        method: 'GET',
-        path: '/-/stats',
-        vhost: vhost,
-        config: {
-            handler: stats.handler
-        }
-    });
+        // GETs always get proxied
+        plugin.route({
+            method: 'GET',
+            path: '/{p*}',
+            vhost: vhost,
+            config: {
+                handler: read,
+                payload: 'stream'
+            }
+        });
 
 
-    // User-info GETs, and all other POST, PUT, and DELETE operations
-    // always go to first service only (write delegate). This includes
-    // user-related operations, publishes, tags, etc.
-    plugin.route({
-        method: 'GET',
-        path: '/-/user/{p*}',
-        vhost: vhost,
-        handler: write,
-        config: {
-            payload: 'stream'
-        }
-    });
+        // Statistics reporter
+        plugin.route({
+            method: 'GET',
+            path: '/-/stats',
+            vhost: vhost,
+            config: {
+                handler: stats.handler
+            }
+        });
 
-    plugin.route({
-        method: 'GET',
-        path: '/-/users',
-        vhost: vhost,
-        config: {
+
+        // User-info GETs, and all other POST, PUT, and DELETE operations
+        // always go to first service only (write delegate). This includes
+        // user-related operations, publishes, tags, etc.
+        plugin.route({
+            method: 'GET',
+            path: '/-/user/{p*}',
+            vhost: vhost,
             handler: write,
-            payload: 'stream'
-        }
-    });
+            config: {
+                payload: 'stream'
+            }
+        });
 
-    plugin.route({
-        method: 'GET',
-        path: '/_users/{p*}',
-        vhost: vhost,
-        config: {
-            handler: write,
-            payload: 'stream'
-        }
-    });
+        plugin.route({
+            method: 'GET',
+            path: '/-/users',
+            vhost: vhost,
+            config: {
+                handler: write,
+                payload: 'stream'
+            }
+        });
 
-    plugin.route({
-        method: 'GET',
-        path: '/public_users/{p*}',
-        vhost: vhost,
-        config: {
-            handler: write,
-            payload: 'stream'
-        }
-    });
+        plugin.route({
+            method: 'GET',
+            path: '/_users/{p*}',
+            vhost: vhost,
+            config: {
+                handler: write,
+                payload: 'stream'
+            }
+        });
 
-    plugin.route({
-        method: 'GET',
-        path: '/-/user-by-email/{p*}',
-        vhost: vhost,
-        config: {
-            handler: write,
-            payload: 'stream'
-        }
-    });
+        plugin.route({
+            method: 'GET',
+            path: '/public_users/{p*}',
+            vhost: vhost,
+            config: {
+                handler: write,
+                payload: 'stream'
+            }
+        });
 
-    plugin.route({
-        method: 'POST',
-        path: '/{p*}',
-        vhost: vhost,
-        config: {
-            handler: write,
-            payload: 'stream'
-        }
-    });
+        plugin.route({
+            method: 'GET',
+            path: '/-/user-by-email/{p*}',
+            vhost: vhost,
+            config: {
+                handler: write,
+                payload: 'stream'
+            }
+        });
 
-    plugin.route({
-        method: 'PUT',
-        path: '/{p*}',
-        vhost: vhost,
-        config: {
-            handler: write,
-            payload: 'stream'
-        }
-    });
+        plugin.route({
+            method: 'POST',
+            path: '/{p*}',
+            vhost: vhost,
+            config: {
+                handler: write,
+                payload: 'stream'
+            }
+        });
 
-    plugin.route({
-        method: 'DELETE',
-        path: '/{p*}',
-        vhost: vhost,
-        config: {
-            handler: write,
-            payload: 'stream'
-        }
-    });
+        plugin.route({
+            method: 'PUT',
+            path: '/{p*}',
+            vhost: vhost,
+            config: {
+                handler: write,
+                payload: 'stream'
+            }
+        });
 
-
-    // Logging
-    logger = log.createLogger(settings);
-    plugin.events.on('log', logger.log.bind(logger));
-
-    plugin.events.on('request', function (req, event) {
-        plugin.log(event.tags, event.data);
-    });
-
-    plugin.events.on('response', function (req) {
-        plugin.log(['info', 'request'], [ req.info.remoteAddress, req.method.toUpperCase(), req.path, req.raw.res.statusCode ].join(' '));
-    });
+        plugin.route({
+            method: 'DELETE',
+            path: '/{p*}',
+            vhost: vhost,
+            config: {
+                handler: write,
+                payload: 'stream'
+            }
+        });
 
 
-    next();
+        // Logging
+        logger = log.createLogger(settings);
+        plugin.events.on('log', logger.log.bind(logger));
+
+        plugin.events.on('request', function (req, event) {
+            plugin.log(event.tags, event.data);
+        });
+
+        plugin.events.on('response', function (req) {
+            plugin.log(['info', 'request'], [ req.info.remoteAddress, req.method.toUpperCase(), req.path, req.raw.res.statusCode ].join(' '));
+        });
+
+
+        next();
+    }
 };
