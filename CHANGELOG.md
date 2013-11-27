@@ -1,6 +1,6 @@
-##### v0.12.1 - 20131127
+##### v0.12.0 - 2013xxxx
 **Bugs**
-- None
+-
 
 **Features**
-- Migrated Makefile to Gruntfile.
+-
