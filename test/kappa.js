@@ -16,7 +16,7 @@ describe('kappa', function () {
 
     settings = {
         paths: expects.map(function (defs) {
-            return defs.registry
+            return defs.registry;
         }),
         vhost: 'npm.mydomain.com',
         logLevel: 'error'
