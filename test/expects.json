@@ -11,6 +11,10 @@
                     }]
                 },
                 {
+                    "path": "server-error",
+                    "reply": [500]
+                },
+                {
                     "path": "core-util-is",
                     "reply": [404]
                 },
@@ -45,6 +49,13 @@
                 {
                     "path": "cdb",
                     "reply": [404]
+                },
+                {
+                    "path": "server-error",
+                    "reply": [200, {}, {
+                        "content-type": "application/json",
+                        "x-registry": "http://registry.npmjs.org/"
+                    }]
                 },
                 {
                     "path": "core-util-is",

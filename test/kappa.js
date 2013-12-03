@@ -164,4 +164,20 @@ describe('kappa', function () {
 
     });
 
+
+    it('should stop at first registry if server error', function (done) {
+
+        server.inject({
+            headers: { host: 'npm.mydomain.com' },
+            method: 'get',
+            url: '/server-error'
+        }, function (res) {
+            assert(res);
+            assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
+            assert.strictEqual(res.statusCode, 500);
+            done();
+        });
+
+    });
+
 });
