@@ -121,6 +121,28 @@ describe('fallbacks', function () {
     });
 
 
+    it('should fail if the primary registry times out', function (done) {
+        registryA.removeAllListeners('request');
+        registryA.on('request', function (req, res) {
+            setTimeout(function () {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.end('{}');
+            }, 6000);
+        });
+
+        kappa.inject({
+            headers: { host: 'npm.mydomain.com' },
+            method: 'get',
+            url: '/core-util-is'
+        }, function (res) {
+            assert(res);
+            assert.strictEqual(res.statusCode, 500);
+            done();
+        });
+    });
+
+
     it('should fail on first registry error for some read operation', function (done) {
         registryA.removeAllListeners('request');
         registryA.on('request', function (req, res) {
