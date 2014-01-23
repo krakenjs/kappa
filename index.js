@@ -18,11 +18,12 @@
 'use strict';
 
 var Hapi = require('hapi'),
-    pkg = require('./package'),
-    log = require('./lib/log'),
-    stats = require('./lib/stats'),
-    delegate = require('./lib/delegate'),
-    defaults = require('./config/defaults');
+url = require('url'),
+pkg = require('./package'),
+log = require('./lib/log'),
+stats = require('./lib/stats'),
+delegate = require('./lib/delegate'),
+defaults = require('./config/defaults');
 
 
 module.exports = {
@@ -145,6 +146,30 @@ module.exports = {
             }
         });
 
+        //Rewrite tarball URLs to kappa so that everything comes through kappa
+        plugin.ext('onPostHandler', function (request, next) {
+            var response, tarball;
+
+            response = request.response();
+
+            if (!response.isBoom && response.variety === 'obj') {
+
+                if (response.raw.versions) {
+
+                    Object.keys(response.raw.versions).forEach(function (version) {
+                        tarball = url.parse(response.raw.versions[version].dist.tarball);
+
+                        tarball.host = tarball.hostname = settings.vhost;
+
+                        response.raw.versions[version].dist.tarball = tarball.format();
+                    });
+
+                    response.update();
+                }
+            }
+
+            next();
+        });
 
         // Logging
         logger = log.createLogger(settings);
