@@ -98,6 +98,22 @@ describe('kappa', function () {
 
     });
 
+    it('should return content types other than application/json', function (done) {
+
+        server.inject({
+            headers: { host: 'npm.mydomain.com' },
+            method: 'get',
+            url: '/plain'
+        }, function (res) {
+            assert(res);
+            assert.ok(/^text\/plain/.test(res.headers['content-type']));
+            assert.strictEqual(res.statusCode, 200);
+            assert.strictEqual(res.payload, 'plain text');
+            done();
+        });
+
+    });
+
 
     it('should return a public package', function (done) {
 

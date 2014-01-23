@@ -11,6 +11,12 @@
                     }]
                 },
                 {
+                    "path": "plain",
+                    "reply": [200, "plain text", {
+                        "content-type": "text/plain"
+                    }]
+                },
+                {
                     "path": "server-error",
                     "reply": [500]
                 },
