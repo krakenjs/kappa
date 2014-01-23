@@ -18,12 +18,12 @@
 'use strict';
 
 var Hapi = require('hapi'),
-url = require('url'),
-pkg = require('./package'),
-log = require('./lib/log'),
-stats = require('./lib/stats'),
-delegate = require('./lib/delegate'),
-defaults = require('./config/defaults');
+    url = require('url'),
+    pkg = require('./package'),
+    log = require('./lib/log'),
+    stats = require('./lib/stats'),
+    delegate = require('./lib/delegate'),
+    defaults = require('./config/defaults');
 
 
 module.exports = {
