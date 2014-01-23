@@ -146,7 +146,8 @@ module.exports = {
             }
         });
 
-        //Rewrite tarball URLs to kappa so that everything comes through kappa
+        //Rewrite tarball URLs to kappa so that everything comes through kappa.
+        //This is useful for metrics, logging, white listing, etc.
         plugin.ext('onPostHandler', function (request, next) {
             var response, tarball;
 
@@ -159,7 +160,8 @@ module.exports = {
                     Object.keys(response.raw.versions).forEach(function (version) {
                         tarball = url.parse(response.raw.versions[version].dist.tarball);
 
-                        tarball.host = tarball.hostname = settings.vhost;
+                        tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
+                        tarball.port = request.server.info.port;
 
                         response.raw.versions[version].dist.tarball = tarball.format();
                     });
