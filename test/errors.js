@@ -6,6 +6,7 @@ var http = require('http'),
     assert = require('chai').assert;
 
 describe('fallbacks', function () {
+    this.timeout(10000);
 
     var settings, kappa, registryA, registryB, registryC;
 

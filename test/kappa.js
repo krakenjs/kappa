@@ -67,6 +67,17 @@ describe('kappa', function () {
 
     it('should return a private package', function (done) {
 
+        server.ext('onPostHandler', function (req, next) {
+            var res = req.response();
+
+            if (res.variety === 'obj') {
+                res.raw.isObject = true;
+                res.update();
+            }
+
+            next();
+        });
+
         server.inject({
             headers: { host: 'npm.mydomain.com' },
             method: 'get',
@@ -76,6 +87,7 @@ describe('kappa', function () {
             assert.ok(/^application\/json/.test(res.headers['content-type']));
             assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
             assert.strictEqual(res.statusCode, 200);
+            assert.strictEqual(JSON.parse(res.payload).isObject, true);
             done();
         });
 
@@ -93,6 +105,22 @@ describe('kappa', function () {
             assert.ok(/^application\/json/.test(res.headers['content-type']));
             assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
             assert.strictEqual(res.statusCode, 200);
+            done();
+        });
+
+    });
+
+    it('should return content types other than application/json', function (done) {
+
+        server.inject({
+            headers: { host: 'npm.mydomain.com' },
+            method: 'get',
+            url: '/plain'
+        }, function (res) {
+            assert(res);
+            assert.ok(/^text\/plain/.test(res.headers['content-type']));
+            assert.strictEqual(res.statusCode, 200);
+            assert.strictEqual(res.payload, 'plain text');
             done();
         });
 
