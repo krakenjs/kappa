@@ -18,6 +18,7 @@
 'use strict';
 
 var Hapi = require('hapi'),
+    url = require('url'),
     pkg = require('./package'),
     log = require('./lib/log'),
     stats = require('./lib/stats'),
@@ -145,6 +146,32 @@ module.exports = {
             }
         });
 
+        //Rewrite tarball URLs to kappa so that everything comes through kappa.
+        //This is useful for metrics, logging, white listing, etc.
+        plugin.ext('onPostHandler', function (request, next) {
+            var response, tarball;
+
+            response = request.response();
+
+            if (!response.isBoom && response.variety === 'obj') {
+
+                if (response.raw.versions) {
+
+                    Object.keys(response.raw.versions).forEach(function (version) {
+                        tarball = url.parse(response.raw.versions[version].dist.tarball);
+
+                        tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
+                        tarball.port = request.server.info.port;
+
+                        response.raw.versions[version].dist.tarball = tarball.format();
+                    });
+
+                    response.update();
+                }
+            }
+
+            next();
+        });
 
         // Logging
         logger = log.createLogger(settings);
