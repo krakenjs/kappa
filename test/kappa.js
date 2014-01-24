@@ -66,6 +66,7 @@ describe('kappa', function () {
 
 
     it('should return a private package', function (done) {
+        var payload;
 
         server.ext('onPostHandler', function (req, next) {
             var res = req.response();
@@ -87,7 +88,12 @@ describe('kappa', function () {
             assert.ok(/^application\/json/.test(res.headers['content-type']));
             assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
             assert.strictEqual(res.statusCode, 200);
-            assert.strictEqual(JSON.parse(res.payload).isObject, true);
+
+            payload = JSON.parse(res.payload);
+
+            assert.strictEqual(payload.isObject, true);
+            assert.strictEqual(payload.versions['0.0.1'].dist.tarball, 'http://npm.mydomain.com/file.tgz');
+
             done();
         });
 
