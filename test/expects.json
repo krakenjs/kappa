@@ -40,7 +40,7 @@
             "head": [
                 {
                     "path": "cdb",
-                    "reply": [200, "", {
+                    "reply": [200, {}, {
                         "content-type": "application/json",
                         "x-registry": "http://localhost:5984/registry/_design/ghost/_rewrite/"
                     }]
