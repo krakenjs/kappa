@@ -5,7 +5,15 @@
             "get": [
                 {
                     "path": "cdb",
-                    "reply": [200, {}, {
+                    "reply": [200, {
+                        "versions": {
+                            "0.0.1": {
+                                "dist": {
+                                    "tarball": "http://localhost:5984/file.tgz"
+                                }
+                            }
+                        }
+                    }, {
                         "content-type": "application/json",
                         "x-registry": "http://localhost:5984/registry/_design/ghost/_rewrite/"
                     }]
