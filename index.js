@@ -46,8 +46,7 @@ module.exports = {
             path: '/{p*}',
             vhost: vhost,
             config: {
-                handler: read,
-                payload: 'stream'
+                handler: read
             }
         });
 
@@ -70,9 +69,8 @@ module.exports = {
             method: 'GET',
             path: '/-/user/{p*}',
             vhost: vhost,
-            handler: write,
             config: {
-                payload: 'stream'
+                handler: write
             }
         });
 
@@ -81,8 +79,7 @@ module.exports = {
             path: '/-/users',
             vhost: vhost,
             config: {
-                handler: write,
-                payload: 'stream'
+                handler: write
             }
         });
 
@@ -91,8 +88,7 @@ module.exports = {
             path: '/_users/{p*}',
             vhost: vhost,
             config: {
-                handler: write,
-                payload: 'stream'
+                handler: write
             }
         });
 
@@ -101,8 +97,7 @@ module.exports = {
             path: '/public_users/{p*}',
             vhost: vhost,
             config: {
-                handler: write,
-                payload: 'stream'
+                handler: write
             }
         });
 
@@ -111,8 +106,7 @@ module.exports = {
             path: '/-/user-by-email/{p*}',
             vhost: vhost,
             config: {
-                handler: write,
-                payload: 'stream'
+                handler: write
             }
         });
 
@@ -122,7 +116,9 @@ module.exports = {
             vhost: vhost,
             config: {
                 handler: write,
-                payload: 'stream'
+                payload: {
+                    output: 'stream'
+                }
             }
         });
 
@@ -131,8 +127,7 @@ module.exports = {
             path: '/{p*}',
             vhost: vhost,
             config: {
-                handler: write,
-                payload: 'stream'
+                handler: write
             }
         });
 
@@ -141,8 +136,7 @@ module.exports = {
             path: '/{p*}',
             vhost: vhost,
             config: {
-                handler: write,
-                payload: 'stream'
+                handler: write
             }
         });
 
@@ -151,22 +145,20 @@ module.exports = {
         plugin.ext('onPostHandler', function (request, next) {
             var response, tarball;
 
-            response = request.response();
+            response = request.response;
 
-            if (!response.isBoom && response.variety === 'obj') {
+            if (!response.isBoom && response.variety === 'plain') {
 
-                if (response.raw.versions) {
+                if (response.source.versions) {
 
-                    Object.keys(response.raw.versions).forEach(function (version) {
-                        tarball = url.parse(response.raw.versions[version].dist.tarball);
+                    Object.keys(response.source.versions).forEach(function (version) {
+                        tarball = url.parse(response.source.versions[version].dist.tarball);
 
                         tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
                         tarball.port = request.server.info.port;
 
-                        response.raw.versions[version].dist.tarball = tarball.format();
+                        response.source.versions[version].dist.tarball = tarball.format();
                     });
-
-                    response.update();
                 }
             }
 
@@ -184,7 +176,6 @@ module.exports = {
         plugin.events.on('response', function (req) {
             plugin.log(['info', 'request'], [ req.info.remoteAddress, req.method.toUpperCase(), req.path, req.raw.res.statusCode ].join(' '));
         });
-
 
         next();
     }
