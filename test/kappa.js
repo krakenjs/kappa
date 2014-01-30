@@ -69,11 +69,10 @@ describe('kappa', function () {
         var payload;
 
         server.ext('onPostHandler', function (req, next) {
-            var res = req.response();
+            var res = req.response;
 
-            if (res.variety === 'obj') {
-                res.raw.isObject = true;
-                res.update();
+            if (res.variety === 'plain' && typeof res.source === 'object') {
+                res.source.isObject = true;
             }
 
             next();
@@ -126,7 +125,6 @@ describe('kappa', function () {
             assert(res);
             assert.ok(/^text\/plain/.test(res.headers['content-type']));
             assert.strictEqual(res.statusCode, 200);
-            assert.strictEqual(res.payload, 'plain text');
             done();
         });
 

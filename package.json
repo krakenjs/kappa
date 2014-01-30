@@ -14,6 +14,9 @@
   ],
   "repository": "https://github.com/paypal/kappa.git",
   "author": "Erik Toth <ertoth@paypal.com>",
+  "contributors": [
+      "Trevor Livingston <trlivingston@paypal.com"
+  ],
   "licenses": [
     {
       "type": "Apache 2.0",
@@ -25,13 +28,14 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "nipple": "~2.1.0"
   },
   "peerDependencies": {
-    "hapi": "~1.x.x"
+    "hapi": "~2.1.x"
   },
   "devDependencies": {
-    "hapi": "~1.x.x",
+    "hapi": "~2.1.x",
     "mocha": "~1.8.1",
     "chai": "~1.6.0",
     "nock": "~0.23.0",
