@@ -149,7 +149,7 @@ module.exports = {
 
             if (!response.isBoom && response.variety === 'plain') {
 
-                if (response.source.versions) {
+                if (typeof response.source === 'object' && response.source.versions) {
 
                     Object.keys(response.source.versions).forEach(function (version) {
                         tarball = url.parse(response.source.versions[version].dist.tarball);
