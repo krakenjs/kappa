@@ -71,7 +71,7 @@ describe('kappa', function () {
         server.ext('onPostHandler', function (req, next) {
             var res = req.response;
 
-            if (res.variety === 'plain') {
+            if (res.variety === 'plain' && typeof res.source === 'object') {
                 res.source.isObject = true;
             }
 
