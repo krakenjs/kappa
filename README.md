@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/paypal/kappa)](https://travis-ci.org/paypal/kappa)
+[![Build Status](https://travis-ci.org/paypal/kappa.png)](https://travis-ci.org/paypal/kappa)
 
 Kappa
 ======
