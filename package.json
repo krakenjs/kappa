@@ -29,7 +29,7 @@
   "engineStrict": true,
   "dependencies": {
     "async": "~0.2.9",
-    "nipple": "~0.2.x"
+    "nipple": "~2.1.0"
   },
   "peerDependencies": {
     "hapi": "~2.1.x"
