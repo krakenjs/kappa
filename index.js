@@ -17,12 +17,13 @@
  \*───────────────────────────────────────────────────────────────────────────*/
 'use strict';
 
-var Hapi = require('hapi'),
+var hapi = require('hapi'),
     url = require('url'),
     pkg = require('./package'),
     log = require('./lib/log'),
     stats = require('./lib/stats'),
     delegate = require('./lib/delegate'),
+    stats = require('./lib/stats'),
     defaults = require('./config/defaults');
 
 
@@ -35,7 +36,7 @@ module.exports = {
     register: function (plugin, options, next) {
         var settings, read, write, vhost, logger;
 
-        settings = Hapi.utils.applyToDefaults(defaults, options);
+        settings = hapi.utils.applyToDefaults(defaults, options);
         read = delegate.createHandler(settings.paths);
         write = delegate.createHandler(settings.paths.slice(0, 1));
         vhost = settings.vhost;
@@ -140,6 +141,12 @@ module.exports = {
             }
         });
 
+        plugin.ext('onRequest', function (request, next) {
+            stats.increment('http:requests:total');
+            stats.increment('http:requests:active');
+            next();
+        });
+
         //Rewrite tarball URLs to kappa so that everything comes through kappa.
         //This is useful for metrics, logging, white listing, etc.
         plugin.ext('onPostHandler', function (request, next) {
@@ -160,6 +167,20 @@ module.exports = {
                         response.source.versions[version].dist.tarball = tarball.format();
                     });
                 }
+            }
+
+            next();
+        });
+
+        plugin.ext('onPreResponse', function (request, next) {
+            var response = request.response;
+
+            stats.decrement('http:requests:active');
+
+            if (response.isBoom) {
+                stats.increment('http:errors');
+
+                request.log('error', response.message);
             }
 
             next();
