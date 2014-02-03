@@ -6,41 +6,52 @@ Kappa
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi plugin used to proxy npm to support private npm repos without replicating the entire public registry.
 
+**Note:** You don't run Kappa by itself. It must be added as a dependency of your project.
+
 #### Quickstart
-Deploying a kappa server only requires 2 artifacts. These files can be put under source control and
-deployed via any mechansim.
-- `package.json` file 
-- a Hapi Composer manifest (`config.json`)
- 
 
 
-First, create a `package.json` file for your server, adding `kappa` as a dependency and a startup script
-to kick off the server.
-```bash
-$ npm init
-# ...
-$ npm install --save kappa # or manually add kappa to your dependencies
-```
+1. Create an empty package.json in a new folder (`npm init`)
+1. Install kappa (`npm install kappa --save`)
+2. Add the start command to your package.json (see below)
+2. Create a `config.json` file. (see below)
+2. `npm start`
+3. Verify that it works (http://localhost:8000/-/all)
 
+Add this run script to your `package.json` file to easily start your Kappa instance with `npm start`
 ```javascript
-// package.json
 {
     "scripts": {
-        "start": "./node_modules/.bin/hapi -c config.json"
+        "start": "hapi -c config.json"
     }
 }
 ```
 
-Then, create a `config.json` file which is a [Hapi Composer manifest](http://spumko.github.io/resource/api/#hapi-composer)
-file. This will have any custom settings for your particular installation. (See the example config `example/config.json`
-for layout and the `config` section below for kappa-specific configuration options.)
+A basic `config.json` file.
 
-Once the two artifacts have been deployed to your server, simply run it.
-```bash
-$ npm install
-$ npm start
+```javascript
+{
+    "servers": [
+        {
+            "host": "localhost",
+            "port": 8000
+        }
+    ],
+    "plugins": {
+        "kappa": {
+            "paths": [
+                "https://registry.npmjs.org/"
+            ]
+        }
+    }
+}
 ```
 
+####Hapi Composer manifest
+
+The `config.json` file is a [Hapi Composer manifest](http://spumko.github.io/resource/api/#hapi-composer)
+file. This will have any custom settings for your particular installation. (See the example config `example/config.json`
+for layout and the `config` section below for kappa-specific configuration options.)
 
 #### Configuration
 kappa configuration currently supports the following parameters
