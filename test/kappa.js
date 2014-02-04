@@ -98,6 +98,28 @@ describe('kappa', function () {
 
     });
 
+    it('should rewrite tarball on specific version too', function (done) {
+        var payload;
+
+        server.inject({
+            headers: { host: 'npm.mydomain.com' },
+            method: 'get',
+            url: '/cdb/0.0.1'
+        }, function (res) {
+            assert(res);
+            assert.ok(/^application\/json/.test(res.headers['content-type']));
+            assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
+            assert.strictEqual(res.statusCode, 200);
+
+            payload = JSON.parse(res.payload);
+
+            assert.strictEqual(payload.dist.tarball, 'http://npm.mydomain.com/file.tgz');
+
+            done();
+        });
+
+    });
+
 
     it('should return a 200 for a HEAD request of a private package', function (done) {
 

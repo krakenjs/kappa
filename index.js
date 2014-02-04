@@ -172,8 +172,8 @@ module.exports = {
                             response.source.versions[version].dist.tarball = rewrite(response.source.versions[version].dist.tarball);
                         });
                     }
-                    else if (response.dist) {
-                        response.dist.tarball = rewrite(response.dist.tarball);
+                    else if (response.source.dist) {
+                        response.source.dist.tarball = rewrite(response.source.dist.tarball);
                     }
 
                 }
