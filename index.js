@@ -150,22 +150,32 @@ module.exports = {
         //Rewrite tarball URLs to kappa so that everything comes through kappa.
         //This is useful for metrics, logging, white listing, etc.
         plugin.ext('onPostHandler', function (request, next) {
-            var response, tarball;
+            var response;
 
             response = request.response;
 
+            function rewrite(tarball) {
+                tarball = url.parse(tarball);
+
+                tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
+                tarball.port = request.server.info.port;
+
+                return tarball.format();
+            }
+
             if (!response.isBoom && response.variety === 'plain') {
 
-                if (typeof response.source === 'object' && response.source.versions) {
+                if (typeof response.source === 'object') {
 
-                    Object.keys(response.source.versions).forEach(function (version) {
-                        tarball = url.parse(response.source.versions[version].dist.tarball);
+                    if (response.source.versions) {
+                        Object.keys(response.source.versions).forEach(function (version) {
+                            response.source.versions[version].dist.tarball = rewrite(response.source.versions[version].dist.tarball);
+                        });
+                    }
+                    else if (response.dist) {
+                        response.dist.tarball = rewrite(response.dist.tarball);
+                    }
 
-                        tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
-                        tarball.port = request.server.info.port;
-
-                        response.source.versions[version].dist.tarball = tarball.format();
-                    });
                 }
             }
 
