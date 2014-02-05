@@ -99,6 +99,41 @@ describe('kappa', function () {
     });
 
 
+    it('should return a specific version of a private package', function (done) {
+        var payload;
+
+        server.ext('onPostHandler', function (req, next) {
+            var res = req.response;
+
+            if (res.variety === 'plain' && typeof res.source === 'object') {
+                res.source.isObject = true;
+            }
+
+            next();
+        });
+
+        server.inject({
+            headers: { host: 'npm.mydomain.com' },
+            method: 'get',
+            url: '/cdb/0.0.1'
+        }, function (res) {
+            assert(res);
+            assert.ok(/^application\/json/.test(res.headers['content-type']));
+            assert.strictEqual(res.headers['x-registry'], settings.paths[0]);
+            assert.strictEqual(res.statusCode, 200);
+
+            payload = JSON.parse(res.payload);
+
+            assert.strictEqual(payload.isObject, true);
+            assert.strictEqual(payload.version, '0.0.1');
+            assert.strictEqual(payload.dist.tarball, 'http://npm.mydomain.com/file.tgz');
+
+            done();
+        });
+
+    });
+
+
     it('should return a 200 for a HEAD request of a private package', function (done) {
 
         server.inject({

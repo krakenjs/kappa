@@ -1,6 +1,6 @@
 {
   "name": "kappa",
-  "version": "0.14.0",
+  "version": "0.13.0",
   "description": "A hierarchical npm-registry proxy to make private registries easier. (Based on npm-delegate by @jden)",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "repository": "https://github.com/paypal/kappa.git",
   "author": "Erik Toth <ertoth@paypal.com>",
   "contributors": [
-    "Trevor Livingston <trlivingston@paypal.com"
+    "Trevor Livingston <trlivingston@paypal.com>"
   ],
   "licenses": [
     {
