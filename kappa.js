@@ -3,7 +3,7 @@
 var fs = require('fs'),
     path = require('path'),
     Hapi = require('hapi'),
-    argv = require('optimist').argv,
+    argv = require('minimist')(process.argv.slice(2)),
     shortstop = require('shortstop');
 
 
