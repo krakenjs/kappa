@@ -150,11 +150,12 @@ module.exports = {
         //Rewrite tarball URLs to kappa so that everything comes through kappa.
         //This is useful for metrics, logging, white listing, etc.
         plugin.ext('onPostHandler', function (request, next) {
-            var response, rewrite;
+            var response, rewrite, hostInfo;
 
             response = request.response;
             if (!response.isBoom && response.variety === 'plain') {
-                rewrite = util.rewriter(vhost || request.server.info.host, request.server.info.port);
+                hostInfo = util.hostInfo(request);
+                rewrite = util.rewriter(hostInfo.protocol, hostInfo.hostname, hostInfo.port);
                 util.transform(response.source, 'tarball', rewrite);
             }
 
