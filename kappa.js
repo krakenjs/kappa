@@ -43,12 +43,11 @@ function createEnvResolver() {
 }
 
 function bomb(fn) {
-    var slice = Function.prototype.call.bind(Array.prototype.slice);
     return function setUsUpTheBomb(err) {
         if (err) {
             throw err;
         }
-        return fn.apply(null, slice(arguments, 1));
+        return fn.apply(null, arguments);
     };
 }
 
@@ -68,8 +67,8 @@ manifest = require(path.resolve(basedir, argv.c || argv.config));
 manifest = resolver.resolve(manifest);
 
 composer = new Hapi.Composer(manifest);
-composer.compose(bomb(function () {
-    composer.start(bomb(function () {
+composer.compose(bomb(function (err) {
+    composer.start(bomb(function (err) {
         // This makes the baby Jesus weep.
         composer._manifest[0].servers.forEach(function (server) {
             console.log('Kappa listening on %s:%d', (server.host || ''), server.port);
