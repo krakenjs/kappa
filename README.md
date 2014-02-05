@@ -26,7 +26,7 @@ $ npm install --save kappa # or manually add kappa to your dependencies
 // package.json
 {
     "scripts": {
-        "start": "./node_modules/.bin/hapi -c config.json"
+        "start": "kappa -c config.json"
     }
 }
 ```

@@ -1,46 +1,49 @@
 {
-  "name": "kappa",
-  "version": "0.13.0",
-  "description": "A hierarchical npm-registry proxy to make private registries easier. (Based on npm-delegate by @jden)",
-  "main": "index.js",
-  "scripts": {
-    "test": "grunt test"
-  },
-  "keywords": [
-    "npm",
-    "registry",
-    "private",
-    "proxy"
-  ],
-  "repository": "https://github.com/paypal/kappa.git",
-  "author": "Erik Toth <ertoth@paypal.com>",
-  "contributors": [
-      "Trevor Livingston <trlivingston@paypal.com"
-  ],
-  "licenses": [
-    {
-      "type": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    "name": "kappa",
+    "version": "0.13.0",
+    "description": "A hierarchical npm-registry proxy to make private registries easier. (Based on npm-delegate by @jden)",
+    "main": "index.js",
+    "bin": "kappa.js",
+    "scripts": {
+        "test": "grunt test"
+    },
+    "keywords": [
+        "npm",
+        "registry",
+        "private",
+        "proxy"
+    ],
+    "repository": "https://github.com/paypal/kappa.git",
+    "author": "Erik Toth <ertoth@paypal.com>",
+    "contributors": [
+        "Trevor Livingston <trlivingston@paypal.com>"
+    ],
+    "licenses": [
+        {
+            "type": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "engines": {
+        "node": ">=0.10.12"
+    },
+    "engineStrict": true,
+    "dependencies": {
+        "async": "~0.2.9",
+        "nipple": "~2.1.0",
+        "shortstop": "0.0.1",
+        "optimist": "~0.6.0",
+        "hapi": "~2.1.x"
+    },
+    "peerDependencies": {
+        "hapi": "~2.1.x"
+    },
+    "devDependencies": {
+        "mocha": "~1.8.1",
+        "chai": "~1.6.0",
+        "nock": "~0.23.0",
+        "grunt": "~0.4.1",
+        "grunt-contrib-jshint": "~0.7.0",
+        "grunt-mocha-test": "~0.7.0"
     }
-  ],
-  "engines": {
-    "node": ">=0.10.12"
-  },
-  "engineStrict": true,
-  "dependencies": {
-    "async": "~0.2.9",
-    "nipple": "~2.1.0"
-  },
-  "peerDependencies": {
-    "hapi": "~2.1.x"
-  },
-  "devDependencies": {
-    "hapi": "~2.1.x",
-    "mocha": "~1.8.1",
-    "chai": "~1.6.0",
-    "nock": "~0.23.0",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.7.0",
-    "grunt-mocha-test": "~0.7.0"
-  }
 }
