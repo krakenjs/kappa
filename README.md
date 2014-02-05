@@ -15,7 +15,6 @@ that describes kappa as a plugin. See `./examples/global/config.json` or `./exam
 $ npm install -g kappa
 $ kappa -c config.json
 ```
-> NOTE: `config.json` is a [Hapi Composer manifest](http://spumko.github.io/resource/api/#hapi-composer)
 
 ##### Local Installation
 If you choose to install locally, running kappa is as easy as
