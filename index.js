@@ -18,12 +18,11 @@
 'use strict';
 
 var hapi = require('hapi'),
-    url = require('url'),
     pkg = require('./package'),
     log = require('./lib/log'),
+    util = require('./lib/util'),
     stats = require('./lib/stats'),
     delegate = require('./lib/delegate'),
-    stats = require('./lib/stats'),
     defaults = require('./config/defaults');
 
 
@@ -147,30 +146,21 @@ module.exports = {
             next();
         });
 
+
         //Rewrite tarball URLs to kappa so that everything comes through kappa.
         //This is useful for metrics, logging, white listing, etc.
         plugin.ext('onPostHandler', function (request, next) {
-            var response, tarball;
+            var response, rewrite;
 
             response = request.response;
-
             if (!response.isBoom && response.variety === 'plain') {
-
-                if (typeof response.source === 'object' && response.source.versions) {
-
-                    Object.keys(response.source.versions).forEach(function (version) {
-                        tarball = url.parse(response.source.versions[version].dist.tarball);
-
-                        tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
-                        tarball.port = request.server.info.port;
-
-                        response.source.versions[version].dist.tarball = tarball.format();
-                    });
-                }
+                rewrite = util.rewriter(vhost || request.server.info.host, request.server.info.port);
+                util.transform(response.source, 'tarball', rewrite);
             }
 
             next();
         });
+
 
         plugin.ext('onPreResponse', function (request, next) {
             var response = request.response;
@@ -179,12 +169,12 @@ module.exports = {
 
             if (response.isBoom) {
                 stats.increment('http:errors');
-
                 request.log('error', response.message);
             }
 
             next();
         });
+
 
         // Logging
         logger = log.createLogger(settings);
