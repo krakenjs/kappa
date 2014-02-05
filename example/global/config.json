@@ -1,0 +1,27 @@
+{
+    "servers": [
+        {
+            "host": "localhost",
+            "port": "env:PORT"
+        },
+        {
+            "host": "localhost",
+            "port": "env:SSL_PORT",
+            "tls": {
+                "requestCert": true,
+                "rejectUnauthorized": true,
+                "key": "file:../key.pem",
+                "cert": "file:../cert.pem"
+            }
+        }
+    ],
+    "plugins": {
+        "kappa": {
+            "vhost": "npm.myorg.com",
+            "paths": [
+                "http://localhost:5984/registry/_design/ghost/_rewrite/",
+                "https://registry.npmjs.org/"
+            ]
+        }
+    }
+}

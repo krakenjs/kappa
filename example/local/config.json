@@ -3,19 +3,25 @@
         {
             "host": "localhost",
             "port": 8000
+        },
+        {
+            "host": "localhost",
+            "port": 8443,
+            "tls": {
+                "requestCert": true,
+                "rejectUnauthorized": true,
+                "key": "file:../key.pem",
+                "cert": "file:../cert.pem"
+            }
         }
     ],
     "plugins": {
-        "kappa": [
-            {
-
-            },
-            {
+        "kappa": {
             "vhost": "npm.myorg.com",
             "paths": [
                 "http://localhost:5984/registry/_design/ghost/_rewrite/",
                 "https://registry.npmjs.org/"
             ]
-        }]
+        }
     }
 }
