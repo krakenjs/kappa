@@ -19,6 +19,18 @@
                     }]
                 },
                 {
+                    "path": "cdb/0.0.1",
+                    "reply": [200, {
+                        "version": "0.0.1",
+                        "dist": {
+                            "tarball": "http://localhost:5984/file.tgz"
+                        }
+                    }, {
+                        "content-type": "application/json",
+                        "x-registry": "http://localhost:5984/registry/_design/ghost/_rewrite/"
+                    }]
+                },
+                {
                     "path": "plain",
                     "reply": [200, "", {
                         "content-type": "text/plain"
@@ -62,6 +74,10 @@
             "get": [
                 {
                     "path": "cdb",
+                    "reply": [404, ""]
+                },
+                {
+                    "path": "cdb/0.0.1",
                     "reply": [404, ""]
                 },
                 {
