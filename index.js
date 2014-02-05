@@ -24,6 +24,7 @@ var hapi = require('hapi'),
     stats = require('./lib/stats'),
     delegate = require('./lib/delegate'),
     stats = require('./lib/stats'),
+    thing = require('core-util-is'),
     defaults = require('./config/defaults');
 
 
@@ -150,22 +151,37 @@ module.exports = {
         //Rewrite tarball URLs to kappa so that everything comes through kappa.
         //This is useful for metrics, logging, white listing, etc.
         plugin.ext('onPostHandler', function (request, next) {
-            var response, tarball;
+            var response;
 
             response = request.response;
 
+            function rewrite(tarball) {
+                tarball = url.parse(tarball);
+
+                tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
+                tarball.port = request.server.info.port;
+
+                return tarball.format();
+            }
+
+            function distvalues(obj) {
+                return Object.keys(obj).map(function (prop) {
+                    return obj[prop].dist;
+                });
+            }
+
             if (!response.isBoom && response.variety === 'plain') {
 
-                if (typeof response.source === 'object' && response.source.versions) {
+                if (typeof response.source === 'object') {
 
-                    Object.keys(response.source.versions).forEach(function (version) {
-                        tarball = url.parse(response.source.versions[version].dist.tarball);
+                    var dists = thing.isObject(response.source.versions) ? distvalues(response.source.versions) : [ response.source.dist ];
 
-                        tarball.host = tarball.hostname = settings.vhost || request.server.info.host;
-                        tarball.port = request.server.info.port;
-
-                        response.source.versions[version].dist.tarball = tarball.format();
+                    dists.forEach(function update(dist) {
+                        if (dist && dist.tarball) {
+                            dist.tarball = rewrite(dist.tarball);
+                        }
                     });
+
                 }
             }
 
