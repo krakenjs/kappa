@@ -17,7 +17,7 @@ $ kappa -c config.json
 ```
 > NOTE: `config.json` is a [Hapi Composer manifest](http://spumko.github.io/resource/api/#hapi-composer)
 
-##### Global Installation
+##### Local Installation
 If you choose to install locally, running kappa is as easy as
 ```bash
 $ npm init
