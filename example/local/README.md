@@ -2,12 +2,14 @@
 ```bash
 $ npm init
 $ npm install --save kappa
-$ ./node_modules/.bin/kappa -c config.json
 
-# or add start script to package.json:
+# (optional) add start script to package.json:
 #    "scripts": {
 #        "start": "kappa -c config.json",
 #    }
+#
+
+$ npm start # or `$ ./node_modules/.bin/kappa -c config.json`
 ```
 
 
