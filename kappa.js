@@ -56,14 +56,15 @@ function bomb(fn) {
 
 var basedir, resolver, manifest, composer;
 
-basedir = argv.b ? path.resolve(argv.b) : process.cwd();
+basedir = argv.b || argv.basedir;
+basedir = basedir ? path.resolve(basedir) : process.cwd();
 
 resolver = shortstop.create();
 resolver.use('path', createPathResolver(basedir));
 resolver.use('file', createFileResolver(basedir));
 resolver.use('env',  createEnvResolver(basedir));
 
-manifest = require(path.resolve(basedir, argv.c));
+manifest = require(path.resolve(basedir, argv.c || argv.config));
 manifest = resolver.resolve(manifest);
 
 composer = new Hapi.Composer(manifest);
