@@ -4,9 +4,9 @@ $ npm init
 $ npm install --save kappa
 $ ./node_modules/.bin/kappa -c config.json
 
-# or add "run" script to package.json:
+# or add start script to package.json:
 #    "scripts": {
-#        "run": "kappa -c config.json",
+#        "start": "kappa -c config.json",
 #    }
 ```
 

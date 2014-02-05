@@ -24,9 +24,9 @@ If you choose to install locally, running kappa is as easy as
 $ npm init
 $ npm install --save kappa
 
-# add "run" script to package.json:
+# add start script to package.json:
 #    "scripts": {
-#        "run": "kappa -c config.json",
+#        "start": "kappa -c config.json",
 #    }
 
 $ npm start

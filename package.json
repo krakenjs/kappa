@@ -35,9 +35,6 @@
         "optimist": "~0.6.0",
         "hapi": "~2.1.x"
     },
-    "peerDependencies": {
-        "hapi": "~2.1.x"
-    },
     "devDependencies": {
         "mocha": "~1.8.1",
         "chai": "~1.6.0",
