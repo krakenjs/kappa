@@ -24,6 +24,7 @@ var hapi = require('hapi'),
     stats = require('./lib/stats'),
     delegate = require('./lib/delegate'),
     stats = require('./lib/stats'),
+    thing = require('core-util-is'),
     defaults = require('./config/defaults');
 
 
@@ -163,18 +164,23 @@ module.exports = {
                 return tarball.format();
             }
 
+            function distvalues(obj) {
+                return Object.keys(obj).map(function (prop) {
+                    return obj[prop].dist;
+                });
+            }
+
             if (!response.isBoom && response.variety === 'plain') {
 
                 if (typeof response.source === 'object') {
 
-                    if (response.source.versions) {
-                        Object.keys(response.source.versions).forEach(function (version) {
-                            response.source.versions[version].dist.tarball = rewrite(response.source.versions[version].dist.tarball);
-                        });
-                    }
-                    else if (response.source.dist) {
-                        response.source.dist.tarball = rewrite(response.source.dist.tarball);
-                    }
+                    var dists = thing.isObject(response.source.versions) ? distvalues(response.source.versions) : [ response.source.dist ];
+
+                    dists.forEach(function update(dist) {
+                        if (dist && dist.tarball) {
+                            dist.tarball = rewrite(dist.tarball);
+                        }
+                    });
 
                 }
             }
