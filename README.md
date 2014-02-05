@@ -6,9 +6,11 @@ Kappa
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi plugin used to proxy npm to support private npm repos without replicating the entire public registry.
 
-#### Quickstart
 > NOTE: The `config.json` described below is a [Hapi Composer manifest](http://spumko.github.io/resource/api/#hapi-composer)
-that describes kappa as a plugin. See [./example/global/config.json](example/global/config.json) or [./example/local/config.json](example/local/config.json) for more information.
+that describes kappa as a plugin. See [./example/global/config.json](example/global/config.json) or
+[./example/local/config.json](example/local/config.json) for more information.
+
+#### Quickstart
 
 ##### Global Installation
 ```bash
