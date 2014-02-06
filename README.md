@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/paypal/kappa.png)](https://travis-ci.org/paypal/kappa)
+[![NPM version](https://badge.fury.io/js/kappa.png)](http://badge.fury.io/js/kappa)
+
 
 Kappa
 ======
