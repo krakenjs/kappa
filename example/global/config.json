@@ -2,11 +2,11 @@
     "servers": [
         {
             "host": "localhost",
-            "port": "env:PORT"
+            "port": "env:PORT|d"
         },
         {
             "host": "localhost",
-            "port": "env:SSL_PORT",
+            "port": "env:SSL_PORT|d",
             "tls": {
                 "requestCert": true,
                 "rejectUnauthorized": true,
