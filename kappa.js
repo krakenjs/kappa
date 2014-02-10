@@ -4,43 +4,9 @@ var fs = require('fs'),
     path = require('path'),
     Hapi = require('hapi'),
     argv = require('minimist')(process.argv.slice(2)),
-    shortstop = require('shortstop');
+    shortstop = require('shortstop'),
+    handlers = require('shortstop-handlers');
 
-
-function createPathResolver(basedir) {
-    return function resolvePath(value) {
-        if (path.resolve(value) === value) {
-            // Is absolute path already
-            return value;
-        }
-
-        return path.join(basedir, value);
-    };
-}
-
-function createFileResolver(basedir) {
-    var resolve = createPathResolver(basedir);
-    return function resolveFile(value) {
-        return fs.readFileSync(resolve(value));
-    };
-}
-
-
-function createEnvResolver() {
-    return function (value) {
-        var env, num;
-        env = process.env[value];
-
-        // Slight kludge to handle Number types.
-        // I know, I know... it won't handle 1.7976931348623157e+308
-        if (env && env.match(/\d*/)) {
-            num = parseInt(env, 10);
-            env = isNaN(num) ? env : num;
-        }
-
-        return env;
-    };
-}
 
 function bomb(fn) {
     return function setUsUpTheBomb(err) {
@@ -59,9 +25,9 @@ basedir = argv.b || argv.basedir;
 basedir = basedir ? path.resolve(basedir) : process.cwd();
 
 resolver = shortstop.create();
-resolver.use('path', createPathResolver(basedir));
-resolver.use('file', createFileResolver(basedir));
-resolver.use('env',  createEnvResolver(basedir));
+resolver.use('path', handlers.path(basedir));
+resolver.use('file', handlers.file(basedir));
+resolver.use('env',  handlers.env(basedir));
 
 manifest = require(path.resolve(basedir, argv.c || argv.config));
 manifest = resolver.resolve(manifest);
