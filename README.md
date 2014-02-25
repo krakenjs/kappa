@@ -1,7 +1,8 @@
-[![Build Status](https://travis-ci.org/paypal/kappa.png)](https://travis-ci.org/paypal/kappa)
-
 Kappa
 ======
+
+[![Build Status](https://travis-ci.org/paypal/kappa.png)](https://travis-ci.org/paypal/kappa)
+[![NPM version](https://badge.fury.io/js/kappa.png)](http://badge.fury.io/js/kappa)
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi plugin used to proxy npm to support private npm repos without replicating the entire public registry.
