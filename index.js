@@ -153,7 +153,7 @@ module.exports = {
             var response, rewrite, hostInfo;
 
             response = request.response;
-            if ((!response.isBoom && response.statusCode !== 500) && response.variety === 'plain') {
+            if ((!response.isBoom && response.statusCode >= 500) && response.variety === 'plain') {
                 hostInfo = util.hostInfo(request);
                 rewrite = util.rewriter(hostInfo.protocol, hostInfo.hostname, hostInfo.port);
                 util.transform(response.source, 'tarball', rewrite);
@@ -168,7 +168,7 @@ module.exports = {
 
             stats.decrement('http:requests:active');
 
-            if (response.isBoom || response.statusCode === 500) {
+            if (response.isBoom || response.statusCode >= 500) {
                 stats.increment('http:errors');
                 request.log('error', response.message);
             }
