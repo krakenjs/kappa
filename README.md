@@ -45,7 +45,7 @@ $ npm start
 kappa plugin currently supports the following parameters
 
 - `vhost` - the virtual host associated with the kappa server, e.g. 'npm.mydomain.com'
-- `paths` (optional) - any ordered array of npm repositories to use, e.g. Defaults to `['http://localhost:5984/registry/_design/ghost/_rewrite/', 'https://registry.npmjs.org/']`
+- `paths` (optional) - any ordered array of npm repositories to use, e.g. Defaults to `['http://localhost:5984/registry/_design/app/_rewrite/', 'https://registry.npmjs.org/']`
 
 For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry.
 If the requested module is not found it continues to the next registry, and so on.
