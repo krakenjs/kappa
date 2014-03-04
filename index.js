@@ -162,6 +162,13 @@ module.exports = {
                 util.transform(response.source, 'tarball', rewrite);
             }
 
+            
+            if( request.method === 'get' && response.headers && response.headers[ 'x-registry' ] 
+                && response.headers[ 'x-registry' ] !== settings.paths[ 0 ] ) 
+            {
+                request.log( [ 'info', 'redirect' ], { "package": request.params.p, "path": response.headers[ 'x-registry' ] } );
+            }
+
             next();
         });
 
