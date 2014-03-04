@@ -171,7 +171,7 @@ module.exports = {
 
             stats.decrement('http:requests:active');
 
-            if (response.isBoom) {
+            if (response.isBoom || response.statusCode >= 500) {
                 stats.increment('http:errors');
                 request.log('error', response.message);
             }

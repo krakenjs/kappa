@@ -138,7 +138,7 @@ describe('fallbacks', function () {
             url: '/core-util-is'
         }, function (res) {
             assert(res);
-            assert.strictEqual(res.statusCode, 500);
+            assert.strictEqual(res.statusCode, 504);
             done();
         });
     });
