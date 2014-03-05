@@ -36,6 +36,10 @@ module.exports = {
         var settings, read, write, vhost, logger;
 
         settings = hapi.utils.applyToDefaults(defaults, options);
+        settings.paths = settings.paths.map(function (path) {
+            return util.suffix(path, '/');
+        });
+
         read = delegate.createHandler(settings.paths);
         write = delegate.createHandler(settings.paths.slice(0, 1));
         vhost = settings.vhost;
