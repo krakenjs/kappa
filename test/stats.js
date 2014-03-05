@@ -1,58 +1,68 @@
-/*global describe:false, it:false, before:false*/
 'use strict';
 
-var assert = require('chai').assert,
-    Hapi = require('hapi');
+var test = require('tape');
+var Hapi = require('hapi');
+var kappa = require('../');
+var stats = require('../lib/stats');
 
 
-
-describe('stats', function () {
-
-    var settings, server;
-
-    settings = {
-        paths: [
-            'http://localhost:5984/registry/_design/ghost/_rewrite/',
-            'https://registry.npmjs.org/'
-        ],
-        vhost: 'npm.mydomain.com',
-        logLevel: 'error'
-
+function wait(duration, fn) {
+    return function () {
+        var args;
+        args = Array.prototype.slice.call(arguments);
+        args.unshift(null);
+        setTimeout(Function.prototype.bind.apply(fn, args), duration);
     };
+}
 
-
-    before(function (done) {
-
-        server = new Hapi.Server();
-        server.pack.require('../', settings, function (err) {
-            assert.ok(!err);
-            done();
-        });
-
-    });
-
-
-    it('should report stats', function (done) {
-
-        server.inject({
-            headers: { host: 'npm.mydomain.com' },
-            method: 'get',
-            url: '/-/stats'
-        }, function (res) {
-            var stats;
-
-            assert(res);
-            assert(/^application\/json/.test(res.headers['content-type']));
-            assert.strictEqual(res.statusCode, 200);
-
-            assert(stats = res.result);
-            assert.isDefined(stats.counters);
-            assert.isDefined(stats.hostname);
-            assert.isDefined(stats.loadavg);
-            assert.isDefined(stats.totalmem);
-            done();
-        });
-
-    });
-
+// Prime some samples
+stats.sample('bar', 10);
+stats.sample('baz', function () {
+    return 10;
 });
+
+test('stats', wait(6000, function (t) {
+
+    t.test('handler', function (t) {
+        stats.handler(null, function (stats) {
+            t.equal(typeof stats, 'object');
+            t.equal(typeof stats.counters, 'object');
+            t.equal(typeof stats.hostname, 'string');
+            t.equal(typeof stats.loadavg,  'object');
+            t.equal(typeof stats.totalmem, 'number');
+            t.end();
+        });
+    });
+
+    t.test('increment', function (t) {
+        stats.increment('foo');
+        stats.handler(null, function (stats) {
+            t.equal(typeof stats, 'object');
+            t.equal(typeof stats.counters, 'object');
+            t.equal(stats.counters.foo, 1);
+            t.end();
+        });
+    });
+
+    t.test('decrement', function (t) {
+        stats.decrement('foo');
+        stats.handler(null, function (stats) {
+            t.equal(typeof stats, 'object');
+            t.equal(typeof stats.counters, 'object');
+            t.equal(stats.counters.foo, 0);
+            t.end();
+        });
+    });
+
+    t.test('sample', function (t) {
+        // Setup prior to test... see above.
+        stats.handler(null, function (stats) {
+            t.equal(typeof stats, 'object');
+            t.equal(typeof stats.samples, 'object');
+            t.equal(stats.samples.bar, 10);
+            t.equal(stats.samples.baz, 10);
+            t.end();
+        });
+    });
+
+}));

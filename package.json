@@ -5,7 +5,9 @@
   "main": "index.js",
   "bin": "kappa.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "tape test/*.js",
+    "cover": "istanbul cover tape -- test/*.js",
+    "lint": "jshint -c .jshintrc index.js lib/*.js"
   },
   "keywords": [
     "npm",
@@ -37,11 +39,9 @@
     "shortstop-handlers": "~0.1.0"
   },
   "devDependencies": {
-    "mocha": "~1.8.1",
-    "chai": "~1.6.0",
-    "nock": "~0.23.0",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.7.0",
-    "grunt-mocha-test": "~0.7.0"
+    "nock": "~0.27.2",
+    "istanbul": "~0.2.4",
+    "jshint": "~2.4.4",
+    "tape": "~2.6.0"
   }
 }
