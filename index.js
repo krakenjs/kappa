@@ -163,10 +163,10 @@ module.exports = {
             }
 
             
-            if( request.method === 'get' && response.headers && response.headers[ 'x-registry' ] 
-                && response.headers[ 'x-registry' ] !== settings.paths[ 0 ] ) 
+            if (request.method === 'get' && response.headers && response.headers['x-registry'] && 
+                response.headers['x-registry'] !== settings.paths[0] ) 
             {
-                request.log( [ 'info', 'redirect' ], { "package": request.params.p, "path": response.headers[ 'x-registry' ] } );
+                request.log([ 'info', 'redirect' ], { "package": request.params.p, "path": response.headers['x-registry'] });
             }
 
             next();
