@@ -1,0 +1,137 @@
+[
+    {
+        "registry": "http://localhost:5984/registry/_design/app/_rewrite/",
+        "request": {
+            "cdb": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": {
+                        "versions": {
+                            "0.0.1": {
+                                "dist": {
+                                    "tarball": "http://localhost:5984/file.tgz"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "cdb/0.0.1": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": {
+                        "version": "0.0.1",
+                        "dist": {
+                            "tarball": "http://localhost:5984/file.tgz"
+                        }
+                    }
+                }
+            },
+            "core-util-is": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "core-util-is/1.0.1": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "plain": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "text/plain"
+                    },
+                    "body": null
+                }
+            },
+            "å": {
+                "response": {
+                    "status": 404,
+                    "headers": null,
+                    "body": null
+                }
+            },
+            "server-error": {
+                "response": {
+                    "status": 500,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "boom": {
+                "response": {
+                    "status": null,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": null
+                }
+            }
+        }
+    },
+    {
+        "registry": "http://registry.npmjs.org/",
+        "request": {
+            "cdb": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": "not found"
+                }
+            },
+            "cdb/0.0.1": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": "not found"
+                }
+            },
+            "core-util-is": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": {}
+                }
+            },
+            "core-util-is/1.0.1": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": {}
+                }
+            },
+            "å": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": "not found"
+                }
+            },
+            "server-error": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": {}
+                }
+            }
+        }
+    }
+]

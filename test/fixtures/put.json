@@ -1,0 +1,28 @@
+[
+    {
+        "registry": "http://localhost:5984/registry/_design/app/_rewrite/",
+        "request": {
+            "cdb": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": null
+                }
+            }
+        }
+    },
+    {
+        "registry": "http://registry.npmjs.org/",
+        "request": {
+            "cdb": {
+                "response": {
+                    "status": 500,
+                    "headers": {},
+                    "body": "error"
+                }
+            }
+        }
+    }
+]

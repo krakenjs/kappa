@@ -1,0 +1,82 @@
+[
+    {
+        "registry": "http://localhost:5984/registry/_design/app/_rewrite/",
+        "request": {
+            "cdb": {
+                "response": {
+                    "status": 200,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "cdb/0.0.1": {
+                "response": {
+                    "status": 200,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "core-util-is": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "core-util-is/1.0.1": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "å": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
+            }
+        }
+    },
+    {
+        "registry": "http://registry.npmjs.org/",
+        "request": {
+            "cdb": {
+                "response": {
+                    "status": 404,
+                    "headers": null,
+                    "body": null
+                }
+            },
+            "cdb/0.0.1": {
+                "response": {
+                    "status": 404,
+                    "headers": null,
+                    "body": null
+                }
+            },
+            "core-util-is": {
+                "response": {
+                    "status": 200,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "core-util-is/1.0.1": {
+                "response": {
+                    "status": 200,
+                    "headers": {},
+                    "body": {}
+                }
+            },
+            "å": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
+            }
+        }
+    }
+]
