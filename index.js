@@ -143,7 +143,10 @@ module.exports = {
             path: '/{p*}',
             vhost: vhost,
             config: {
-                handler: write
+                handler: write,
+                payload: {
+                    output: 'stream'
+                }
             }
         });
 
