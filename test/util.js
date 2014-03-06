@@ -226,23 +226,54 @@ test('transform', function (t) {
 
 
 test('rewriter', function (t) {
-    var rewrite, actual;
+    var req, host, registry, rewrite, actual;
 
-    t.plan(4);
+    t.plan(9);
 
-    rewrite = util.rewriter('http', 'localhost', 8000);
+    req = {
+        headers: {},
+        info: url.parse('http://npm.paypal.com/'),
+        server: {
+            info: url.parse('http://localhost:8000')
+        }
+    };
+
+    host = util.hostInfo(req);
+    registry = url.parse('http://localhost:5984/registry/_design/app/_rewrite/');
+    rewrite = util.rewriter(host, registry);
 
     actual = rewrite();
     t.notOk(actual);
 
-    actual = rewrite('https://www.paypal.com/foo');
-    t.equal(actual, 'http://localhost:8000/foo');
+    actual = rewrite('http://localhost:5984/foo');
+    t.equal(actual, 'http://npm.paypal.com/foo');
 
-    actual = rewrite('http://localhost');
-    t.equal(actual, 'http://localhost:8000/');
+    actual = rewrite('http://localhost:5984');
+    t.equal(actual, 'http://npm.paypal.com/');
 
-    actual = rewrite('http://paypal.com:443/foo/bar?baz=true');
-    t.equal(actual, 'http://localhost:8000/foo/bar?baz=true');
+    actual = rewrite('http://localhost:5984/');
+    t.equal(actual, 'http://npm.paypal.com/');
+
+    actual = rewrite('http://localhost:5984/registry/_design/app/_rewrite/kappa/-/kappa-0.0.0.tgz');
+    t.equal(actual, 'http://npm.paypal.com/kappa/-/kappa-0.0.0.tgz');
+
+
+    host = util.hostInfo(req);
+    registry = url.parse('http://registry.npmjs.org');
+    rewrite = util.rewriter(host, registry);
+
+    actual = rewrite('http://registry.npmjs.org/foo');
+    t.equal(actual, 'http://npm.paypal.com/foo');
+
+    actual = rewrite('http://registry.npmjs.org');
+    t.equal(actual, 'http://npm.paypal.com/');
+
+    actual = rewrite('http://registry.npmjs.org/');
+    t.equal(actual, 'http://npm.paypal.com/');
+
+    actual = rewrite('http://registry.npmjs.org/kappa/-/kappa-0.0.0.tgz');
+    t.equal(actual, 'http://npm.paypal.com/kappa/-/kappa-0.0.0.tgz');
+
 
     t.end();
 });

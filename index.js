@@ -17,7 +17,8 @@
  \*───────────────────────────────────────────────────────────────────────────*/
 'use strict';
 
-var hapi = require('hapi'),
+var url = require('url'),
+    hapi = require('hapi'),
     pkg = require('./package'),
     log = require('./lib/log'),
     util = require('./lib/util'),
@@ -160,12 +161,13 @@ module.exports = {
         //Rewrite tarball URLs to kappa so that everything comes through kappa.
         //This is useful for metrics, logging, white listing, etc.
         plugin.ext('onPostHandler', function (request, next) {
-            var response, rewrite, hostInfo;
+            var response, rewrite, host, registry;
 
             response = request.response;
             if (!response.isBoom && response.variety === 'plain') {
-                hostInfo = util.hostInfo(request);
-                rewrite = util.rewriter(hostInfo.protocol, hostInfo.hostname, hostInfo.port);
+                host = util.hostInfo(request);
+                registry = url.parse(response.headers['x-registry'] || '');
+                rewrite = util.rewriter(host, registry);
                 util.transform(response.source, 'tarball', rewrite);
             }
 
