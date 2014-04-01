@@ -15,7 +15,7 @@
     "private",
     "proxy"
   ],
-  "repository": "https://github.com/paypal/kappa.git",
+  "repository": "https://github.com/krakenjs/kappa.git",
   "author": "Erik Toth <ertoth@paypal.com>",
   "contributors": [
     "Trevor Livingston <trlivingston@paypal.com>"
