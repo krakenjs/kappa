@@ -7,11 +7,13 @@
         {
             "host": "localhost",
             "port": 8443,
-            "tls": {
-                "requestCert": true,
-                "rejectUnauthorized": true,
-                "key": "file:../key.pem",
-                "cert": "file:../cert.pem"
+            "options": {
+                "tls": {
+                    "requestCert": true,
+                    "rejectUnauthorized": true,
+                    "key": "file:../key.pem",
+                    "cert": "file:../cert.pem"
+                }
             }
         }
     ],
