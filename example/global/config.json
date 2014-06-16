@@ -3,18 +3,26 @@
         {
             "host": "localhost",
             "port": "env:PORT|d",
-            "options": { "payload": { "maxBytes": 10000000 } }
+            "options": {
+                "payload": {
+                    "maxBytes": 10000000
+                }
+            }
         },
         {
             "host": "localhost",
             "port": "env:SSL_PORT|d",
-            "tls": {
-                "requestCert": true,
-                "rejectUnauthorized": true,
-                "key": "file:../key.pem",
-                "cert": "file:../cert.pem"
-            },
-            "options": { "payload": { "maxBytes": 10000000 } }
+            "options": {
+                "tls": {
+                    "requestCert": true,
+                    "rejectUnauthorized": true,
+                    "key": "file:../key.pem",
+                    "cert": "file:../cert.pem"
+                },
+                "payload": {
+                    "maxBytes": 10000000
+                }
+            }
         }
     ],
     "plugins": {
