@@ -78,6 +78,15 @@
                     },
                     "body": null
                 }
+            },
+            "-/by-field?field=name": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": {"pkg": {"name": "pkg"}}
+                }
             }
         }
     },
