@@ -170,7 +170,7 @@ module.exports = {
                 rewrite = util.rewriter(host, registry);
                 util.transform(response.source, 'tarball', rewrite);
             }
-
+            
             next();
         });
 
@@ -199,6 +199,13 @@ module.exports = {
 
         plugin.events.on('response', function (req) {
             plugin.log(['info', 'request'], [ req.info.remoteAddress, req.method.toUpperCase(), req.path, req.raw.res.statusCode ].join(' '));
+
+            var res = req.response,
+                path = res.headers && res.headers['x-registry'],
+                pkg = req.params.p.split('/')[0];
+            if (req.method === 'get' && path && path !== settings.paths[0]) {
+                plugin.log(['info', 'redirect'], { "package": pkg, "path": path });
+            }
         });
 
         next();
