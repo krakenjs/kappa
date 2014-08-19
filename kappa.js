@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-var fs = require('fs'),
-    path = require('path'),
-    Hapi = require('hapi'),
-    argv = require('minimist')(process.argv.slice(2)),
-    shortstop = require('shortstop'),
-    handlers = require('shortstop-handlers');
+var fs = require('fs');
+var path = require('path');
+var Hapi = require('hapi');
+var argv = require('minimist')(process.argv.slice(2));
+var shortstop = require('shortstop');
+var handlers = require('shortstop-handlers');
 
 
 function bomb(fn) {
@@ -19,7 +19,7 @@ function bomb(fn) {
 
 
 
-var basedir, resolver, manifest, composer;
+var basedir, resolver, manifest;
 
 basedir = argv.b || argv.basedir;
 basedir = basedir ? path.resolve(basedir) : process.cwd();
@@ -30,14 +30,18 @@ resolver.use('file', handlers.file(basedir));
 resolver.use('env',  handlers.env(basedir));
 
 manifest = require(path.resolve(basedir, argv.c || argv.config));
-manifest = resolver.resolve(manifest);
+manifest = resolver.resolve(manifest, bomb(function (err, manifest) {
 
-composer = new Hapi.Composer(manifest);
-composer.compose(bomb(function (err) {
-    composer.start(bomb(function (err) {
-        // This makes the baby Jesus weep.
-        composer._manifest[0].servers.forEach(function (server) {
-            console.log('Kappa listening on %s:%d', (server.host || ''), server.port);
-        });
+    Hapi.Pack.compose(manifest, {}, bomb(function (err, pack) {
+
+        pack.start(bomb(function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log('Server started.');
+        }));
+
     }));
+
 }));
+

@@ -5,22 +5,16 @@ var test = require('tape');
 var Hapi = require('hapi');
 var nock = require('nock');
 var settings = require('../config/defaults');
-
-
-test('require', function (t) {
-    var server;
-    server = new Hapi.Server();
-    server.pack.require('../', settings, function (err) {
-        t.error(err);
-        t.end();
-    });
-});
-
+var kappa = require('../');
 
 test('register', function (t) {
     var server;
-    server = new Hapi.Server();
-    server.pack.register(require('../'), settings, function (err) {
+
+    server = new Hapi.Server({ debug: false });
+    server.pack.register({
+        plugin: kappa,
+        options: settings
+    }, function (err) {
         t.error(err);
         t.end();
     });
@@ -37,7 +31,10 @@ test('stream handler', function (t) {
     nock(uri.protocol + '//' + uri.host).get(uri.pathname + 'cdb').reply(200, {}, {});
 
     server = new Hapi.Server();
-    server.pack.register(require('../'), settings, function (err) {
+    server.pack.register({
+        plugin: kappa,
+        options: settings
+    }, function (err) {
         t.error(err);
 
         server.ext('onPostHandler', function (req, next) {
