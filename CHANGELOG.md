@@ -1,3 +1,8 @@
+##### v1.0.0-rc.1 - 20140909
+**Features**
+- Upgrade to hapi 6.
+- Removed logging, prefers Good.
+
 ##### v0.14.0 - 20140205
 **Features**
 - Upgrade to hapi 2.1.x
