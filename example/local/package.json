@@ -4,5 +4,8 @@
   "description": "My Personal NPM registry",
   "scripts": {
       "start": "kappa -c config.json"
+  },
+  "dependencies": {
+    "good": "^2.2.3"
   }
 }

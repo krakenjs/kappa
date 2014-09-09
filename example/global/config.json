@@ -32,6 +32,11 @@
                 "http://localhost:5984/registry/_design/app/_rewrite/",
                 "https://registry.npmjs.org/"
             ]
+        },
+        "good": {
+            "subscribers": {
+                "console": ["request", "ops", "log", "error"]
+            }
         }
     }
 }

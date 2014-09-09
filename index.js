@@ -18,10 +18,8 @@
 'use strict';
 
 var Url = require('url');
-var Hapi = require('hapi');
 var Hoek = require('hoek');
 var pkg = require('./package');
-var log = require('./lib/log');
 var util = require('./lib/util');
 var stats = require('./lib/stats');
 var delegate = require('./lib/delegate');
@@ -156,8 +154,8 @@ exports.register = function register(plugin, options, next) {
     });
 
 
-    //Rewrite tarball URLs to kappa so that everything comes through kappa.
-    //This is useful for metrics, logging, white listing, etc.
+    // Rewrite tarball URLs to kappa so that everything comes through kappa.
+    // This is useful for metrics, logging, white listing, etc.
     plugin.ext('onPostHandler', function (request, next) {
         var response, rewrite, host, registry;
 
@@ -184,19 +182,6 @@ exports.register = function register(plugin, options, next) {
         }
 
         next();
-    });
-
-
-    // Logging
-    logger = log.createLogger(settings);
-    plugin.events.on('log', logger.log.bind(logger));
-
-    plugin.events.on('request', function (req, event) {
-        plugin.log(event.tags, event.data);
-    });
-
-    plugin.events.on('response', function (req) {
-        plugin.log(['info', 'request'], [ req.info.remoteAddress, req.method.toUpperCase(), req.path, req.raw.res.statusCode ].join(' '));
     });
 
     next();
