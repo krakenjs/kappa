@@ -1,6 +1,6 @@
 {
   "name": "kappa",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "A hierarchical npm-registry proxy to make private registries easier. (Based on npm-delegate by @jden)",
   "main": "index.js",
   "bin": "kappa.js",
