@@ -32,7 +32,7 @@
   "engineStrict": true,
   "dependencies": {
     "async": "^0.9.0",
-    "hapi": "^6.5.1",
+    "hapi": "^7.0.0",
     "hoek": "^2.4.1",
     "minimist": "^1.1.0",
     "shortstop": "^1.0.1",
