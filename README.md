@@ -44,8 +44,10 @@ $ npm start
 #### Options
 kappa plugin currently supports the following parameters
 
-- `vhost` - the virtual host associated with the kappa server, e.g. 'npm.mydomain.com'
+- `vhost` (optional) - the virtual host associated with the kappa server, e.g. 'npm.mydomain.com'
 - `paths` (optional) - any ordered array of npm repositories to use, e.g. Defaults to `['http://localhost:5984/registry/_design/app/_rewrite/', 'https://registry.npmjs.org/']`
+- `rewriteTarballs` (optional) - Rewrite tarball URLs to send all traffic through the configured server. Setting to false allows tarballs to be downloaded directly from the server
+that fulfilled the package request. Defaults to `true`.
 
 For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the module from the first registry.
 If the requested module is not found it continues to the next registry, and so on.

@@ -27,7 +27,7 @@ var defaults = require('./config/defaults');
 
 
 exports.register = function register(plugin, options, next) {
-    var settings, read, write, vhost, logger;
+    var settings, read, write, vhost;
 
     settings = Hoek.applyToDefaults(defaults, options);
     settings.paths = settings.paths.map(function (path) {
@@ -154,22 +154,23 @@ exports.register = function register(plugin, options, next) {
     });
 
 
-    // Rewrite tarball URLs to kappa so that everything comes through kappa.
-    // This is useful for metrics, logging, white listing, etc.
-    plugin.ext('onPostHandler', function (request, next) {
-        var response, rewrite, host, registry;
+    if (settings.rewriteTarballs) {
+        // Rewrite tarball URLs to kappa so that everything comes through kappa.
+        // This is useful for metrics, logging, white listing, etc.
+        plugin.ext('onPostHandler', function (request, next) {
+            var response, rewrite, host, registry;
 
-        response = request.response;
-        if (!response.isBoom && response.variety === 'plain') {
-            host = util.hostInfo(request);
-            registry = Url.parse(response.headers['x-registry'] || '');
-            rewrite = util.rewriter(host, registry);
-            util.transform(response.source, 'tarball', rewrite);
-        }
+            response = request.response;
+            if (!response.isBoom && response.variety === 'plain') {
+                host = util.hostInfo(request);
+                registry = Url.parse(response.headers['x-registry'] || '');
+                rewrite = util.rewriter(host, registry);
+                util.transform(response.source, 'tarball', rewrite);
+            }
 
-        next();
-    });
-
+            next();
+        });
+    }
 
     plugin.ext('onPreResponse', function (request, next) {
         var response = request.response;

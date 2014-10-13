@@ -34,9 +34,17 @@
             ]
         },
         "good": {
-            "subscribers": {
-                "console": ["request", "ops", "log", "error"]
-            }
+            "reporters":  [{
+                "reporter": "require:good/lib/reporter",
+                "args": [{
+                    "events": {
+                        "request": "*",
+                        "log": "*",
+                        "error": "*",
+                        "ops": "*"
+                    }
+                }]
+            }]
         }
     }
 }

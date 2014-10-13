@@ -46,8 +46,7 @@ test('get', function (t) {
             paths: spec.map(function (spec) {
                 return spec.registry;
             }),
-            vhost: 'npm.mydomain.com',
-            logLevel: 'error'
+            vhost: 'npm.mydomain.com'
         };
 
         server = new Hapi.Server();
@@ -223,6 +222,7 @@ test('get', function (t) {
         });
     });
 
+
     t.test('query params', function (t) {
         var req = {
             headers: {
@@ -239,6 +239,66 @@ test('get', function (t) {
         });
     });
 });
+
+
+test('rewrites', function (t) {
+    var spec, server;
+
+    spec = require('./fixtures/get');
+    spec.forEach(mock.bind(null, 'get'));
+
+
+    t.on('end', function() {
+        nock.cleanAll();
+    });
+
+
+    t.test('server', function (t) {
+        var settings = {
+            paths: spec.map(function (spec) {
+                return spec.registry;
+            }),
+            vhost: 'npm.mydomain.com',
+            rewriteTarballs: false
+        };
+
+        server = new Hapi.Server();
+        server.pack.register({
+            plugin: kappa,
+            options: settings
+        }, function (err) {
+            t.error(err);
+            t.end();
+        });
+    });
+
+
+    t.test('disabled rewrites', function (t) {
+        var req = {
+            headers: {
+                host: 'npm.mydomain.com'
+            },
+            method: 'get',
+            url: '/cdb'
+        };
+
+        server.inject(req, function (res) {
+            var payload;
+
+            t.equal(typeof res, 'object');
+            t.ok(/^application\/json/.test(res.headers['content-type']));
+            t.strictEqual(res.headers['x-registry'], spec[0].registry);
+            t.strictEqual(res.statusCode, 200);
+
+            payload = JSON.parse(res.payload);
+            t.equal(typeof payload, 'object');
+            t.strictEqual(payload.versions['0.0.1'].dist.tarball, 'http://localhost:5984/file.tgz');
+
+            t.end();
+        });
+    });
+});
+
 
 
 test('head', function (t) {
@@ -258,8 +318,7 @@ test('head', function (t) {
             paths: spec.map(function (spec) {
                 return spec.registry;
             }),
-            vhost: 'npm.mydomain.com',
-            logLevel: 'error'
+            vhost: 'npm.mydomain.com'
         };
 
 
@@ -392,8 +451,7 @@ test('post', function (t) {
             paths: spec.map(function (spec) {
                 return spec.registry;
             }),
-            vhost: 'npm.mydomain.com',
-            logLevel: 'error'
+            vhost: 'npm.mydomain.com'
         };
 
         server = new Hapi.Server();
@@ -455,8 +513,7 @@ test('put', function (t) {
             paths: spec.map(function (spec) {
                 return spec.registry;
             }),
-            vhost: 'npm.mydomain.com',
-            logLevel: 'error'
+            vhost: 'npm.mydomain.com'
         };
 
         server = new Hapi.Server();
@@ -518,8 +575,7 @@ test('delete', function (t) {
             paths: spec.map(function (spec) {
                 return spec.registry;
             }),
-            vhost: 'npm.mydomain.com',
-            logLevel: 'error'
+            vhost: 'npm.mydomain.com'
         };
 
         server = new Hapi.Server();
