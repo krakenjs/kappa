@@ -28,6 +28,7 @@ resolver = shortstop.create();
 resolver.use('path', handlers.path(basedir));
 resolver.use('file', handlers.file(basedir));
 resolver.use('env',  handlers.env(basedir));
+resolver.use('require', handlers.require(basedir));
 
 manifest = require(path.resolve(basedir, argv.c || argv.config));
 manifest = resolver.resolve(manifest, bomb(function (err, manifest) {
