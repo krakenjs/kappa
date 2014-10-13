@@ -147,6 +147,27 @@ exports.register = function register(plugin, options, next) {
         }
     });
 
+    plugin.route({
+        method: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', '*'],
+        path: '/_utils/{p*}',
+        vhost: vhost,
+        config: {
+            handler: function forbidden(req, reply) {
+                var contentType, payload;
+
+                contentType = req.headers['content-type'];
+
+                if (contentType && contentType.indexOf('application/json') > -1) {
+                    payload = {"error":"forbidden","reason":"public access is not allowed"};
+                } else {
+                    payload = '<!DOCTYPE html><h1>Error 403: Forbidden</h1><p>Public access is not allowed.</p>';
+                }
+
+                reply(payload).code(403).header('Cache-Control', 'no-cache');
+            }
+        }
+    });
+
     plugin.ext('onRequest', function (request, next) {
         stats.increment('http:requests:total');
         stats.increment('http:requests:active');
