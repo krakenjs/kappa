@@ -1,0 +1,16 @@
+[
+    {
+        "registry": "http://localhost:5984/",
+        "request": {
+            "_utils/index.html": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "text/html"
+                    },
+                    "body": "<!DOCTYPE html><h1>Futon</h1>"
+                }
+            }
+        }
+    }
+]

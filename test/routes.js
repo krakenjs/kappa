@@ -581,3 +581,71 @@ test('delete', function (t) {
         });
     });
 });
+
+
+test('futon', function (t) {
+    var spec, server;
+
+    spec = require('./fixtures/futon');
+    spec.forEach(mock.bind(null, 'get'));
+
+
+    t.on('end', function() {
+        nock.cleanAll();
+    });
+
+
+    t.test('server', function (t) {
+        var settings = {
+            paths: spec.map(function (spec) {
+                return spec.registry;
+            }),
+            vhost: 'npm.mydomain.com'
+        };
+
+        server = new Hapi.Server();
+        server.pack.register({
+            plugin: kappa,
+            options: settings
+        }, function (err) {
+            t.error(err);
+            t.end();
+        });
+    });
+
+    t.test('blocked json', function (t) {
+        var req = {
+            headers: {
+                host: 'npm.mydomain.com'
+            },
+            method: 'get',
+            url: '/_utils/index.html'
+        };
+
+        server.inject(req, function (res) {
+            t.equal(typeof res, 'object');
+            t.ok(/^text\/html/.test(res.headers['content-type']));
+            t.strictEqual(res.statusCode, 403);
+            t.end();
+        });
+    });
+
+    t.test('blocked html', function (t) {
+        var req = {
+            headers: {
+                host: 'npm.mydomain.com',
+                'content-type': 'application/json'
+            },
+            method: 'get',
+            url: '/_utils/index.html'
+        };
+
+        server.inject(req, function (res) {
+            t.equal(typeof res, 'object');
+            t.ok(/^application\/json/.test(res.headers['content-type']));
+            t.strictEqual(res.statusCode, 403);
+            t.end();
+        });
+    });
+
+});
