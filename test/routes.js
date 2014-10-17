@@ -194,8 +194,7 @@ test('get', function (t) {
                 'content-type': 'application/json'
             },
             method: 'get',
-            url: '/server-error',
-            payload: '{'
+            url: '/server-error'
         };
 
         server.inject(req, function (res) {
@@ -234,6 +233,7 @@ test('get', function (t) {
         server.inject(req, function (res) {
             t.strictEqual(res.payload, '{"pkg":{"name":"pkg"}}');
             t.strictEqual(res.statusCode, 200);
+            t.ok(res.headers['x-registry']);
             t.end();
         });
     });
