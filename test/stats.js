@@ -15,12 +15,6 @@ function wait(duration, fn) {
     };
 }
 
-// Prime some samples
-stats.sample('bar', 10);
-stats.sample('baz', function () {
-    return 10;
-});
-
 test('stats', wait(6000, function (t) {
 
     t.test('handler', function (t) {
@@ -50,17 +44,6 @@ test('stats', wait(6000, function (t) {
             t.equal(typeof stats, 'object');
             t.equal(typeof stats.counters, 'object');
             t.equal(stats.counters.foo, 0);
-            t.end();
-        });
-    });
-
-    t.test('sample', function (t) {
-        // Setup prior to test... see above.
-        stats.handler(null, function (stats) {
-            t.equal(typeof stats, 'object');
-            t.equal(typeof stats.samples, 'object');
-            t.equal(stats.samples.bar, 10);
-            t.equal(stats.samples.baz, 10);
             t.end();
         });
     });
