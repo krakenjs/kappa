@@ -35,10 +35,7 @@ manifest = resolver.resolve(manifest, bomb(function (err, manifest) {
 
     Hapi.Pack.compose(manifest, {}, bomb(function (err, pack) {
 
-        pack.start(bomb(function (err) {
-            if (err) {
-                throw err;
-            }
+        pack.start(bomb(function () {
             console.log('Server started.');
         }));
 
