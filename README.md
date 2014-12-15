@@ -3,7 +3,7 @@ kappa
 
 Lead Maintainer: [Trevor Livingston](https://github.com/tlivings/)  
 
-[![Build Status](https://travis-ci.org/krakenjs/kappa.png)](https://travis-ci.org/krakenjs/kappa)  
+[![Build Status](https://travis-ci.org/krakenjs/kappa.svg?branch=master)](https://travis-ci.org/krakenjs/kappa)  
 [![NPM version](https://badge.fury.io/js/kappa.png)](http://badge.fury.io/js/kappa)  
 
 Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
