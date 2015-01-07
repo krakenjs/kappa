@@ -55,3 +55,20 @@ For read operations (GET, HEAD, etc) the proxy will first attempt to fetch the m
 If the requested module is not found it continues to the next registry, and so on.
 
 For write operations the proxy will only attempt to write to the FIRST registry. All auth occurs with the first registry as well.
+
+#### FAQs
+
+##### I'm seeing `npm install` fail after a couple of minutes with: `npm ERR! shasum check failed for ...`
+This is *likely* a result of the download exceeding node's default socket idle timeout. The best way to address this is by disabling the socket timeout for your server in the manifest.
+
+``` json
+{
+    "host": "localhost",
+    "port": 8000,
+    "options": {
+        "timeout": {
+            "socket": false
+        }
+    }
+}
+```
