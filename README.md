@@ -58,8 +58,8 @@ For write operations the proxy will only attempt to write to the FIRST registry.
 
 #### FAQs
 
-##### I'm seeing big packages truncated. Why is that and how can I prevent it?
-This is a result of the download exceeding node's default socket idle timeout. The best way to address this is by disabling the socket timeout for your server in the manifest.
+##### I'm seeing `npm install` fail after a couple of minutes with: `npm ERR! shasum check failed for ...`
+This is *likely* a result of the download exceeding node's default socket idle timeout. The best way to address this is by disabling the socket timeout for your server in the manifest.
 
 ``` json
 {
