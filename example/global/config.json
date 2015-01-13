@@ -35,14 +35,12 @@
         },
         "good": {
             "reporters":  [{
-                "reporter": "require:good/lib/reporter",
+                "reporter": "require:good-console",
                 "args": [{
-                    "events": {
-                        "request": "*",
-                        "log": "*",
-                        "error": "*",
-                        "ops": "*"
-                    }
+                    "request": "*",
+                    "log": "*",
+                    "error": "*",
+                    "ops": "*"
                 }]
             }]
         }

@@ -1,6 +1,6 @@
 #### Global Installation
 ```bash
-$ npm install -g kappa
+$ npm install -g kappa good@^3 good-console@^2
 $ kappa -c ./config.json
 ```
 
