@@ -76,7 +76,7 @@
                     "headers": {
                         "content-type": "application/json"
                     },
-                    "body": null
+                    "body": "not valid"
                 }
             },
             "-/by-field?field=name": {
