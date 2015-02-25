@@ -37,7 +37,7 @@
     "minimist": "^1.1.0",
     "shortstop": "^1.0.1",
     "shortstop-handlers": "^1.0.0",
-    "wreck": "^3.0.0"
+    "wreck": "^5.0.0"
   },
   "devDependencies": {
     "istanbul": "^0.3.0",
