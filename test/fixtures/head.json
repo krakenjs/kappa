@@ -5,15 +5,15 @@
             "cdb": {
                 "response": {
                     "status": 200,
-                    "headers": {},
-                    "body": {}
+                    "headers": {"content-type": "application/json"},
+                    "body": null
                 }
             },
             "cdb/0.0.1": {
                 "response": {
                     "status": 200,
-                    "headers": {},
-                    "body": {}
+                    "headers": {"content-type": "application/json"},
+                    "body": null
                 }
             },
             "core-util-is": {
@@ -59,15 +59,15 @@
             "core-util-is": {
                 "response": {
                     "status": 200,
-                    "headers": {},
-                    "body": {}
+                    "headers": {"content-type": "application/json"},
+                    "body": null
                 }
             },
             "core-util-is/1.0.1": {
                 "response": {
                     "status": 200,
-                    "headers": {},
-                    "body": {}
+                    "headers": {"content-type": "application/json"},
+                    "body": null
                 }
             },
             "å": {
