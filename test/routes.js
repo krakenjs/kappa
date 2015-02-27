@@ -343,7 +343,7 @@ test('head', function (t) {
         server.inject(req, function (res) {
             var payload;
 
-            t.equal(typeof res, 'object');
+            t.equal(res.result, null);
             t.ok(/^application\/json/.test(res.headers['content-type']));
             t.strictEqual(res.headers['x-registry'], spec[0].registry);
             t.strictEqual(res.statusCode, 200);
@@ -364,7 +364,7 @@ test('head', function (t) {
         server.inject(req, function (res) {
             var payload;
 
-            t.equal(typeof res, 'object');
+            t.equal(res.result, null);
             t.ok(/^application\/json/.test(res.headers['content-type']));
             t.strictEqual(res.headers['x-registry'], spec[0].registry);
             t.strictEqual(res.statusCode, 200);
