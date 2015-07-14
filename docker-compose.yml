@@ -1,0 +1,8 @@
+registry:
+  image: sisk/npm-registry-couchapp:2.6.10
+kappa:
+  image: sisk/kappa:1.0.0-rc.11
+  ports:
+    - "8000:8000"
+  links:
+    - registry:couchapp

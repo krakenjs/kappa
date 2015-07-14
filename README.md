@@ -15,6 +15,9 @@ that describes kappa as a plugin. See [./example/global/config.json](example/glo
 
 #### Quickstart
 
+##### TL;DCO (too long; didn't check out)
+Using [docker-compose](https://docs.docker.com/compose/install/), just run `docker-compose up` in a directory containing our [docker-compose.yml](docker-compose.yml) file. Soon after you'll have a working kappa instance set up to use a local couch instance (falling back to the public registry) on `0.0.0.0:8000`.
+
 ##### Global Installation
 ```bash
 $ npm install -g kappa
