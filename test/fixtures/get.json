@@ -40,6 +40,13 @@
                     "body": {}
                 }
             },
+            "core-util-is-gzipped": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
+            },
             "core-util-is/1.0.1": {
                 "response": {
                     "status": 404,
@@ -114,6 +121,17 @@
                         "content-type": "application/json"
                     },
                     "body": {}
+                }
+            },
+            "core-util-is-gzipped": {
+                "encoding": "base64",
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json",
+                        "content-encoding": "gzip"
+                    },
+                    "body": "H4sICNy9B1cAA3RlbXAAq1YqLk1OTi0uVrJSKCkqTa3lAgA9cyvvEgAAAA=="
                 }
             },
             "core-util-is/1.0.1": {

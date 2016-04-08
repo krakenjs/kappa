@@ -18,13 +18,21 @@ function mock(method, spec) {
     scope = nock(uri.protocol + '//' + uri.host);
 
     Object.keys(spec.request).forEach(function (path) {
-        var req, res;
+        var req, res, decoded;
 
         req = spec.request[path];
         res = req.response;
 
+        if (req.encoding) {
+            decoded = [new Buffer(res.body, req.encoding)];
+        }
+
         scope = scope[method](uri.pathname + path);
-        scope = scope.reply(res.status, res.body || reply, res.headers || undefined);
+        scope = scope.reply(
+          res.status,
+          decoded || res.body || reply,
+          res.headers || undefined
+        );
     });
 }
 
@@ -127,6 +135,31 @@ test('get', function (t) {
             t.ok(/^application\/json/.test(res.headers['content-type']));
             t.strictEqual(res.headers['x-registry'], spec[1].registry);
             t.strictEqual(res.statusCode, 200);
+            t.end();
+        });
+    });
+
+
+    t.test('public package (gzipped)', function (t) {
+        var req = {
+            headers: {
+                host: 'npm.mydomain.com'
+            },
+            method: 'get',
+            url: '/core-util-is-gzipped'
+        };
+
+        server.inject(req, function (res) {
+            var payload;
+
+            t.ok(res);
+            t.ok(/^application\/json/.test(res.headers['content-type']));
+            t.notOk(/gzip/.test(res.headers['content-encoding']));
+
+            payload = JSON.parse(res.payload);
+            t.strictEqual(res.headers['x-registry'], spec[1].registry);
+            t.strictEqual(res.statusCode, 200);
+            t.strictEqual(payload.success, true);
             t.end();
         });
     });
