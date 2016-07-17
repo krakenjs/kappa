@@ -11,7 +11,7 @@ services:
       - couch_data:/usr/local/var/lib/couchdb
 
   kappa:
-    image: sisk/kappa:1.0.0-rc.11
+    image: sisk/kappa:1.0.0-rc.14
     depends_on:
       - registry
     ports:
