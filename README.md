@@ -1,7 +1,7 @@
 kappa
 ======
 
-Lead Maintainer: [Jean-Charles Sisk](https://github.com/jasisk/)  
+Lead Maintainer: [Shaun Warman](https://github.com/shaunwarman/)  
 
 [![Build Status](https://travis-ci.org/krakenjs/kappa.svg?branch=master)](https://travis-ci.org/krakenjs/kappa)  
 [![NPM version](https://badge.fury.io/js/kappa.png)](http://badge.fury.io/js/kappa)  
