@@ -11,8 +11,9 @@ test('register', function (t) {
     var server;
 
     server = new Hapi.Server({ debug: false });
-    server.pack.register({
-        plugin: kappa,
+    server.connection();
+    server.register({
+        register: kappa,
         options: settings
     }, function (err) {
         t.error(err);
@@ -31,17 +32,19 @@ test('stream handler', function (t) {
     nock(uri.protocol + '//' + uri.host).get(uri.pathname + 'cdb').reply(200, {}, {});
 
     server = new Hapi.Server();
-    server.pack.register({
-        plugin: kappa,
+    server.connection();
+    server.register({
+        register: kappa,
         options: settings
     }, function (err) {
         t.error(err);
 
-        server.ext('onPostHandler', function (req, next) {
+        server.ext('onPostHandler', function (req, reply) {
             var res = req.response;
             t.equal(req.response.variety, 'plain');
             t.equal(typeof req.response.source, 'object');
-            next();
+
+            reply.continue();
         });
 
         server.inject({
@@ -50,7 +53,7 @@ test('stream handler', function (t) {
         }, function (res) {
             t.ok(res);
             t.strictEqual(res.statusCode, 200);
-            t.end()
+            t.end();
         });
 
     });

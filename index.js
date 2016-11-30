@@ -168,17 +168,17 @@ exports.register = function register(plugin, options, next) {
         }
     });
 
-    plugin.ext('onRequest', function (request, next) {
+    plugin.ext('onRequest', function (request, reply) {
         stats.increment('http:requests:total');
         stats.increment('http:requests:active');
-        next();
+        reply.continue();
     });
 
 
     if (settings.rewriteTarballs) {
         // Rewrite tarball URLs to kappa so that everything comes through kappa.
         // This is useful for metrics, logging, white listing, etc.
-        plugin.ext('onPostHandler', function (request, next) {
+        plugin.ext('onPostHandler', function (request, reply) {
             var response, rewrite, host, registry;
 
             response = request.response;
@@ -189,12 +189,12 @@ exports.register = function register(plugin, options, next) {
                 util.transform(response.source, 'tarball', rewrite);
             }
 
-            next();
+            reply.continue();
         });
     }
 
 
-    plugin.ext('onPreResponse', function (request, next) {
+    plugin.ext('onPreResponse', function (request, reply) {
         var response = request.response;
 
         stats.decrement('http:requests:active');
@@ -204,16 +204,13 @@ exports.register = function register(plugin, options, next) {
             request.log('error', response.message);
         }
 
-        next();
+        reply.continue();
     });
 
     next();
 };
 
 exports.register.attributes = {
-
     name: pkg.name,
-
     version: pkg.version
-
 };

@@ -24,8 +24,8 @@ test('proxy octet-streams', function (t) {
     t.plan(6);
 
     server = new Hapi.Server(0);
-    server.pack.register({
-        plugin: kappa,
+    server.register({
+        register: kappa,
         options: settings
     }, function (err) {
         t.error(err);

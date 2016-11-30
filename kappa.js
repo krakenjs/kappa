@@ -7,7 +7,6 @@ var argv = require('minimist')(process.argv.slice(2));
 var shortstop = require('shortstop');
 var handlers = require('shortstop-handlers');
 
-
 function bomb(fn) {
     return function setUsUpTheBomb(err) {
         if (err) {
@@ -16,8 +15,6 @@ function bomb(fn) {
         return fn.apply(null, arguments);
     };
 }
-
-
 
 var basedir, resolver, manifest;
 
@@ -42,4 +39,3 @@ manifest = resolver.resolve(manifest, bomb(function (err, manifest) {
     }));
 
 }));
-

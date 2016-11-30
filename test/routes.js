@@ -50,8 +50,9 @@ test('get', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register({
-            plugin: kappa,
+        server.connection();
+        server.register({
+            register: kappa,
             options: settings
         }, function (err) {
             t.error(err);
@@ -262,8 +263,8 @@ test('rewrites', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register({
-            plugin: kappa,
+        server.register({
+            register: kappa,
             options: settings
         }, function (err) {
             t.error(err);
@@ -321,8 +322,8 @@ test('head', function (t) {
 
 
         server = new Hapi.Server();
-        server.pack.register({
-            plugin: kappa,
+        server.register({
+            register: kappa,
             options: settings
         }, function (err) {
             t.error(err);
@@ -453,8 +454,8 @@ test('post', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register({
-            plugin: kappa,
+        server.register({
+            register: kappa,
             options: settings
         }, function (err) {
             t.error(err);
@@ -515,8 +516,8 @@ test('put', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register({
-            plugin: kappa,
+        server.register({
+            register: kappa,
             options: settings
         }, function (err) {
             t.error(err);
@@ -577,8 +578,8 @@ test('delete', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register({
-            plugin: kappa,
+        server.register({
+            register: kappa,
             options: settings
         }, function (err) {
             t.error(err);
@@ -658,8 +659,8 @@ test('futon', function (t) {
         };
 
         server = new Hapi.Server();
-        server.pack.register({
-            plugin: kappa,
+        server.register({
+            register: kappa,
             options: settings
         }, function (err) {
             t.error(err);
