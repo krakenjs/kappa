@@ -3,6 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var Hapi = require('hapi');
+var Glue = require('glue');
 var argv = require('minimist')(process.argv.slice(2));
 var shortstop = require('shortstop');
 var handlers = require('shortstop-handlers');
@@ -30,7 +31,7 @@ resolver.use('require', handlers.require(basedir));
 manifest = require(path.resolve(basedir, argv.c || argv.config));
 manifest = resolver.resolve(manifest, bomb(function (err, manifest) {
 
-    Hapi.Pack.compose(manifest, {}, bomb(function (err, pack) {
+    Glue.compose(manifest, {}, bomb(function (err, pack) {
 
         pack.start(bomb(function () {
             console.log('Server started.');

@@ -32,9 +32,11 @@
   "engineStrict": true,
   "dependencies": {
     "async": "^0.9.0",
-    "boom": "^2.6.1",
+    "boom": "^2.8.1",
     "content-type": "^1.0.1",
-    "hapi": "^8.0.0",
+    "glue": "^4.1.0",
+    "h2o2": "^5.4.0",
+    "hapi": "^9.0.0",
     "hoek": "^2.4.1",
     "minimist": "^1.1.0",
     "shortstop": "^1.0.1",
