@@ -31,7 +31,7 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^2.1.5",
     "boom": "^2.8.1",
     "content-type": "^1.0.1",
     "glue": "^4.1.0",
