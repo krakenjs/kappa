@@ -263,6 +263,7 @@ test('rewrites', function (t) {
         };
 
         server = new Hapi.Server();
+        server.connection();
         server.register({
             register: kappa,
             options: settings
@@ -322,6 +323,7 @@ test('head', function (t) {
 
 
         server = new Hapi.Server();
+        server.connection();
         server.register({
             register: kappa,
             options: settings
@@ -454,6 +456,7 @@ test('post', function (t) {
         };
 
         server = new Hapi.Server();
+        server.connection();
         server.register({
             register: kappa,
             options: settings
@@ -516,6 +519,7 @@ test('put', function (t) {
         };
 
         server = new Hapi.Server();
+        server.connection();
         server.register({
             register: kappa,
             options: settings
@@ -578,6 +582,7 @@ test('delete', function (t) {
         };
 
         server = new Hapi.Server();
+        server.connection();
         server.register({
             register: kappa,
             options: settings
@@ -659,6 +664,7 @@ test('futon', function (t) {
         };
 
         server = new Hapi.Server();
+        server.connection();
         server.register({
             register: kappa,
             options: settings
