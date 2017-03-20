@@ -42,7 +42,10 @@ test('proxy octet-streams', function (t) {
                   t.error(err);
                   t.ok(payload);
                   t.equal(payload.toString(), 'prepost');
-                  server.stop();
+
+                  server.stop(function onStop() {
+                    t.end();
+                  });
                 });
             });
         });

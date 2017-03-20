@@ -31,9 +31,9 @@ resolver.use('require', handlers.require(basedir));
 manifest = require(path.resolve(basedir, argv.c || argv.config));
 manifest = resolver.resolve(manifest, bomb(function (err, manifest) {
 
-    Glue.compose(manifest, {}, bomb(function (err, pack) {
+    Glue.compose(manifest, {}, bomb(function (err, server) {
 
-        pack.start(bomb(function () {
+        server.start(bomb(function () {
             console.log('Server started.');
         }));
 

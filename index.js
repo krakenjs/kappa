@@ -19,6 +19,7 @@
 
 var Url = require('url');
 var Hoek = require('hoek');
+var H2o2 = require('h2o2');
 var pkg = require('./package');
 var util = require('./lib/util');
 var stats = require('./lib/stats');
@@ -26,7 +27,7 @@ var delegate = require('./lib/delegate');
 var defaults = require('./config/defaults');
 
 
-exports.register = function register(plugin, options, next) {
+function registerServer(plugin, options, next) {
     var settings, read, write, vhost, logger;
 
     settings = Hoek.applyToDefaults(defaults, options);
@@ -213,7 +214,16 @@ exports.register = function register(plugin, options, next) {
     next();
 };
 
+exports.register = function (plugin, options, next) {
+  plugin.register(H2o2, function onDependenciesResolved(err) {
+    if (err) return next(err);
+
+    registerServer(plugin, options, next);
+  });
+};
+
 exports.register.attributes = {
     name: pkg.name,
-    version: pkg.version
+    version: pkg.version,
+    dependencies: ['h2o2']
 };
