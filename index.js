@@ -194,6 +194,9 @@ exports.register = function register(plugin, options, next) {
     }
 
 
+    // behaviour changed on this extension point:
+    // REF: https://github.com/hapijs/hapi/issues/2186
+    // Skip 'onPreResponse' when the request closes prematurely
     plugin.ext('onPreResponse', function (request, reply) {
         var response = request.response;
 
