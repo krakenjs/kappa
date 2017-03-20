@@ -32,16 +32,16 @@
   "engineStrict": true,
   "dependencies": {
     "async": "^2.1.5",
-    "boom": "^3.1.1",
+    "boom": "^4.2.0",
     "content-type": "^1.0.1",
     "glue": "^4.1.0",
-    "h2o2": "^4.0.2",
+    "h2o2": "^5.4.0",
     "hapi": "^14.0.0",
-    "hoek": "^3.0.4",
+    "hoek": "^4.1.0",
     "minimist": "^1.1.0",
     "shortstop": "^1.0.1",
     "shortstop-handlers": "^1.0.0",
-    "wreck": "^6.0.0"
+    "wreck": "^9.0.0"
   },
   "devDependencies": {
     "istanbul": "^0.3.0",
