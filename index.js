@@ -212,11 +212,13 @@ function registerServer(plugin, options, next) {
     });
 
     next();
-};
+}
 
 exports.register = function (plugin, options, next) {
   plugin.register(H2o2, function onDependenciesResolved(err) {
-    if (err) return next(err);
+    if (err) {
+      return next(err);
+    }
 
     registerServer(plugin, options, next);
   });
