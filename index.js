@@ -19,6 +19,7 @@
 
 var Url = require('url');
 var Hoek = require('hoek');
+var H2o2 = require('h2o2');
 var pkg = require('./package');
 var util = require('./lib/util');
 var stats = require('./lib/stats');
@@ -26,7 +27,7 @@ var delegate = require('./lib/delegate');
 var defaults = require('./config/defaults');
 
 
-exports.register = function register(plugin, options, next) {
+function registerServer(plugin, options, next) {
     var settings, read, write, vhost, logger;
 
     settings = Hoek.applyToDefaults(defaults, options);
@@ -168,17 +169,17 @@ exports.register = function register(plugin, options, next) {
         }
     });
 
-    plugin.ext('onRequest', function (request, next) {
+    plugin.ext('onRequest', function (request, reply) {
         stats.increment('http:requests:total');
         stats.increment('http:requests:active');
-        next();
+        reply.continue();
     });
 
 
     if (settings.rewriteTarballs) {
         // Rewrite tarball URLs to kappa so that everything comes through kappa.
         // This is useful for metrics, logging, white listing, etc.
-        plugin.ext('onPostHandler', function (request, next) {
+        plugin.ext('onPostHandler', function (request, reply) {
             var response, rewrite, host, registry;
 
             response = request.response;
@@ -189,12 +190,15 @@ exports.register = function register(plugin, options, next) {
                 util.transform(response.source, 'tarball', rewrite);
             }
 
-            next();
+            reply.continue();
         });
     }
 
 
-    plugin.ext('onPreResponse', function (request, next) {
+    // behaviour changed on this extension point:
+    // REF: https://github.com/hapijs/hapi/issues/2186
+    // Skip 'onPreResponse' when the request closes prematurely
+    plugin.ext('onPreResponse', function (request, reply) {
         var response = request.response;
 
         stats.decrement('http:requests:active');
@@ -204,16 +208,24 @@ exports.register = function register(plugin, options, next) {
             request.log('error', response.message);
         }
 
-        next();
+        reply.continue();
     });
 
     next();
+}
+
+exports.register = function (plugin, options, next) {
+  plugin.register(H2o2, function onDependenciesResolved(err) {
+    if (err) {
+      return next(err);
+    }
+
+    registerServer(plugin, options, next);
+  });
 };
 
 exports.register.attributes = {
-
     name: pkg.name,
-
-    version: pkg.version
-
+    version: pkg.version,
+    dependencies: ['h2o2']
 };

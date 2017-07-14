@@ -1,3 +1,6 @@
+##### Next
+- Upgrade to hapi 15
+
 ##### v1.0.0-rc.1 - 20140909
 **Features**
 - Upgrade to hapi 6.
