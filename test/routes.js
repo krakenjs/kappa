@@ -26,7 +26,7 @@ function mock(method, spec) {
         if (req.encoding) {
             decoded = [new Buffer(res.body, req.encoding)];
         }
-
+        path = path.replace(/(@[^\/]+)(\/)(.+)/, '$1%2F$3');
         scope = scope[method](uri.pathname + path);
         scope = scope.reply(
           res.status,
@@ -184,7 +184,6 @@ test('get', function (t) {
         });
     });
 
-
     t.test('unknown package', function (t) {
         var req = {
             headers: {
@@ -268,6 +267,24 @@ test('get', function (t) {
             t.strictEqual(res.payload, '{"pkg":{"name":"pkg"}}');
             t.strictEqual(res.statusCode, 200);
             t.ok(res.headers['x-registry']);
+            t.end();
+        });
+    });
+
+    t.test('public package', function (t) {
+        var req = {
+            headers: {
+                host: 'npm.mydomain.com'
+            },
+            method: 'get',
+            url: '/@scope/module'
+        };
+
+        server.inject(req, function (res) {
+            t.ok(res);
+            t.ok(/^application\/json/.test(res.headers['content-type']));
+            t.strictEqual(res.headers['x-registry'], spec[1].registry);
+            t.strictEqual(res.statusCode, 200);
             t.end();
         });
     });
@@ -465,6 +482,23 @@ test('head', function (t) {
     });
 
 
+    t.test('public scoped package', function (t) {
+        var req = {
+            headers: {
+                host: 'npm.mydomain.com'
+            },
+            method: 'head',
+            url: '/@scope/module'
+        };
+
+        server.inject(req, function (res) {
+            t.ok(res);
+            t.ok(/^application\/json/.test(res.headers['content-type']));
+            t.strictEqual(res.headers['x-registry'], spec[1].registry);
+            t.strictEqual(res.statusCode, 200);
+            t.end();
+        });
+    });
 });
 
 
