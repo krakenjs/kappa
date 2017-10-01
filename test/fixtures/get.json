@@ -94,6 +94,13 @@
                     },
                     "body": {"pkg": {"name": "pkg"}}
                 }
+            },
+            "@scope/module": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
             }
         }
     },
@@ -151,6 +158,15 @@
                 }
             },
             "server-error": {
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "body": {}
+                }
+            },
+            "@scope/module": {
                 "response": {
                     "status": 200,
                     "headers": {

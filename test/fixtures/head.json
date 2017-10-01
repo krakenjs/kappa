@@ -36,6 +36,13 @@
                     "headers": {},
                     "body": {}
                 }
+            },
+            "@scope/module": {
+                "response": {
+                    "status": 404,
+                    "headers": {},
+                    "body": {}
+                }
             }
         }
     },
@@ -75,6 +82,13 @@
                     "status": 404,
                     "headers": {},
                     "body": {}
+                }
+            },
+            "@scope/module": {
+                "response": {
+                    "status": 200,
+                    "headers": {"content-type": "application/json"},
+                    "body": null
                 }
             }
         }
