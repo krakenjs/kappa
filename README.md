@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/krakenjs/kappa.svg?branch=master)](https://travis-ci.org/krakenjs/kappa)  
 [![NPM version](https://badge.fury.io/js/kappa.png)](http://badge.fury.io/js/kappa)  
 
-Based on [npm-delegate] (https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
+Based on [npm-delegate](https://npmjs.org/package/npm-delegate) by Jason Denizac <jason@denizac.org>, this module
 is a hapi plugin used to proxy npm to support private npm repos without replicating the entire public registry.
 
 > NOTE: The `config.json` described below is a [Hapi Composer manifest](http://spumko.github.io/resource/api/#hapi-composer)
